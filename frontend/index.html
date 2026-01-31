@@ -18,10 +18,13 @@
         <!-- Header -->
         <header class="text-center mb-10 reveal-anim">
             <div class="flex items-center justify-center mb-2">
-                <i class="fas fa-fingerprint text-4xl text-sky-400 mr-3 filter drop-shadow-[0_0_8px_rgba(56,189,248,0.5)]"></i>
-                <h1 class="text-4xl md:text-5xl font-bold tracking-tight">Voice<span class="gradient-text">Shield</span></h1>
+                <i
+                    class="fas fa-fingerprint text-4xl text-sky-400 mr-3 filter drop-shadow-[0_0_8px_rgba(56,189,248,0.5)]"></i>
+                <h1 class="text-4xl md:text-5xl font-bold tracking-tight">Voice<span class="gradient-text">Shield</span>
+                </h1>
             </div>
-            <p class="text-slate-400 text-base max-w-lg mx-auto leading-relaxed">Check if a voice is real or made by AI.</p>
+            <p class="text-slate-400 text-base max-w-lg mx-auto leading-relaxed">Check if a voice is real or made by AI.
+            </p>
         </header>
 
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
@@ -35,21 +38,32 @@
 
                     <!-- Language Selection -->
                     <div class="mb-6">
-                        <label class="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider">Choose Language</label>
+                        <label class="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider">Choose
+                            Language</label>
                         <div class="grid grid-cols-2 gap-2" id="lang-grid">
-                            <button onclick="selectLang('english')" class="lang-btn px-3 py-2 rounded-lg border border-white/5 bg-white/5 hover:bg-white/10 transition-all text-sm active-lang" data-lang="english">
+                            <button onclick="selectLang('english')"
+                                class="lang-btn px-3 py-2 rounded-lg border border-white/5 bg-white/5 hover:bg-white/10 transition-all text-sm active-lang"
+                                data-lang="english">
                                 🇺🇸 English
                             </button>
-                            <button onclick="selectLang('hindi')" class="lang-btn px-3 py-2 rounded-lg border border-white/5 bg-white/5 hover:bg-white/10 transition-all text-sm" data-lang="hindi">
+                            <button onclick="selectLang('hindi')"
+                                class="lang-btn px-3 py-2 rounded-lg border border-white/5 bg-white/5 hover:bg-white/10 transition-all text-sm"
+                                data-lang="hindi">
                                 🇮🇳 Hindi
                             </button>
-                            <button onclick="selectLang('tamil')" class="lang-btn px-3 py-2 rounded-lg border border-white/5 bg-white/5 hover:bg-white/10 transition-all text-sm" data-lang="tamil">
+                            <button onclick="selectLang('tamil')"
+                                class="lang-btn px-3 py-2 rounded-lg border border-white/5 bg-white/5 hover:bg-white/10 transition-all text-sm"
+                                data-lang="tamil">
                                 🇮🇳 Tamil
                             </button>
-                            <button onclick="selectLang('malayalam')" class="lang-btn px-3 py-2 rounded-lg border border-white/5 bg-white/5 hover:bg-white/10 transition-all text-sm" data-lang="malayalam">
+                            <button onclick="selectLang('malayalam')"
+                                class="lang-btn px-3 py-2 rounded-lg border border-white/5 bg-white/5 hover:bg-white/10 transition-all text-sm"
+                                data-lang="malayalam">
                                 🇮🇳 Malayalam
                             </button>
-                            <button onclick="selectLang('telugu')" class="lang-btn px-3 py-2 rounded-lg border border-white/5 bg-white/5 hover:bg-white/10 transition-all text-sm" data-lang="telugu">
+                            <button onclick="selectLang('telugu')"
+                                class="lang-btn px-3 py-2 rounded-lg border border-white/5 bg-white/5 hover:bg-white/10 transition-all text-sm"
+                                data-lang="telugu">
                                 🇮🇳 Telugu
                             </button>
                         </div>
@@ -181,9 +195,12 @@
         // Language Selection
         window.selectLang = (lang) => {
             selectedLanguage = lang;
+            console.log("Language selected:", selectedLanguage); // For debugging
             document.querySelectorAll('.lang-btn').forEach(btn => {
                 btn.classList.remove('active-lang');
-                if (btn.dataset.lang === lang) btn.classList.add('active-lang');
+                if (btn.getAttribute('data-lang') === lang) {
+                    btn.classList.add('active-lang');
+                }
             });
         };
 
