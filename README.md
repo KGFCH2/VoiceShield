@@ -247,4 +247,4 @@ The API can be deployed to any cloud platform that supports Python (e.g., Render
 
 ## License
 
-MIT License
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

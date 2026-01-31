@@ -109,3 +109,9 @@ The API uses an **Enhanced Heuristic Model** rather than a simple black-box ML m
 *   **Human Indicators**: High pitch range (especially in singing), natural breathing pauses, and rich spectral dynamics.
 
 Each characteristic is weighted, and the final score (0.0 to 1.0) determines the classification.
+
+---
+
+## 📄 License
+
+This software is shared under the **MIT License**. You are free to use, modify, and distribute it. See the [LICENSE](LICENSE) file for the full legal text.
