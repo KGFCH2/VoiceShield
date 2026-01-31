@@ -74,6 +74,11 @@ When testing via Swagger ([http://127.0.0.1:8001/docs](http://127.0.0.1:8001/doc
 
 ---
 
+## ⚖️ License
+This software is shared under the **MIT License**. You are free to use, modify, and distribute it. See the [LICENSE](LICENSE) file for the full legal text.
+
+---
+
 ## 📁 Project Structure & File Functions
 
 ### 1. `backend/app/` (Core Application)

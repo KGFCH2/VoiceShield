@@ -83,7 +83,7 @@ The system uses **Digital Signal Processing (DSP)** via Librosa to analyze audio
 8. **Spectral Dynamics**: How frequency components change over time.
 
 ---
-© 2026 VoiceShield AI | Built with FastAPI & Librosa
+© 2026 VoiceShield AI | Built with FastAPI & Librosa | Licensed under [MIT](LICENSE)
 
 ## API Documentation
 

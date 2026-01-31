@@ -7,153 +7,7 @@
     <title>VoiceShield AI - Voice Detection</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap');
-
-        :root {
-            --primary: #38bdf8;
-            --primary-glow: rgba(56, 189, 248, 0.3);
-            --accent: #818cf8;
-            --bg: #030712;
-            --card-bg: rgba(17, 24, 39, 0.7);
-        }
-
-        body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: var(--bg);
-            color: #f8fafc;
-            overflow-x: hidden;
-        }
-
-        /* Animated Mesh Background */
-        .mesh-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            background: 
-                radial-gradient(at 0% 0%, rgba(56, 189, 248, 0.15) 0px, transparent 50%),
-                radial-gradient(at 100% 0%, rgba(129, 140, 248, 0.15) 0px, transparent 50%),
-                radial-gradient(at 100% 100%, rgba(56, 189, 248, 0.1) 0px, transparent 50%),
-                radial-gradient(at 0% 100%, rgba(129, 140, 248, 0.1) 0px, transparent 50%);
-            filter: blur(80px);
-            animation: moveBg 20s ease infinite alternate;
-        }
-
-        @keyframes moveBg {
-            0% { transform: scale(1); }
-            100% { transform: scale(1.1); }
-        }
-
-        .glass-card {
-            background: var(--card-bg);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 28px;
-            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .glass-card:hover {
-            border-color: rgba(56, 189, 248, 0.2);
-            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.6);
-        }
-
-        .gradient-text {
-            background: linear-gradient(135deg, #7dd3fc 0%, #a5b4fc 100%);
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 0 8px rgba(56, 189, 248, 0.3));
-        }
-
-        .upload-area {
-            border: 2px dashed rgba(255, 255, 255, 0.1);
-            background: rgba(255, 255, 255, 0.02);
-            transition: all 0.3s ease;
-        }
-
-        .upload-area.active {
-            border-color: var(--primary);
-            background: rgba(56, 189, 248, 0.08);
-            transform: scale(1.02);
-        }
-
-        .btn-glow:hover:not(:disabled) {
-            box-shadow: 0 0 20px var(--primary-glow);
-            transform: translateY(-2px);
-        }
-
-        /* Scan Animation */
-        .scanning {
-            position: relative;
-            overflow: hidden;
-        }
-
-        .scanning::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: linear-gradient(90deg, transparent, var(--primary), transparent);
-            animation: scan 2s linear infinite;
-            box-shadow: 0 0 15px var(--primary);
-        }
-
-        @keyframes scan {
-            0% { top: 0; }
-            100% { top: 100%; }
-        }
-
-        /* Waveform simulation */
-        .wave-container {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 3px;
-            height: 40px;
-        }
-
-        .wave-bar {
-            width: 3px;
-            height: 10px;
-            background: var(--primary);
-            border-radius: 50px;
-            animation: pulse-wave 1s ease-in-out infinite;
-            opacity: 0.3;
-        }
-
-        @keyframes pulse-wave {
-            0%, 100% { height: 10px; }
-            50% { height: 30px; }
-        }
-
-        .reveal-anim {
-            animation: reveal 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-        }
-
-        @keyframes reveal {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .spinner {
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            border-top: 2px solid var(--primary);
-            border-radius: 50%;
-            width: 20px;
-            height: 20px;
-            animation: spin 0.8s linear infinite;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body class="min-h-screen p-4 md:p-8 flex items-center justify-center">
@@ -163,7 +17,8 @@
     <div class="max-w-5xl w-full mx-auto">
         <!-- Header -->
         <header class="text-center mb-16 reveal-anim">
-            <div class="inline-flex items-center justify-center bg-sky-500/10 border border-sky-500/20 rounded-full px-4 py-1.5 mb-6">
+            <div
+                class="inline-flex items-center justify-center bg-sky-500/10 border border-sky-500/20 rounded-full px-4 py-1.5 mb-6">
                 <span class="flex h-2 w-2 mr-2">
                     <span class="animate-ping absolute inline-flex h-2 w-2 rounded-full bg-sky-400 opacity-75"></span>
                     <span class="relative inline-flex rounded-full h-2 w-2 bg-sky-500"></span>
@@ -171,10 +26,13 @@
                 <span class="text-xs font-bold text-sky-400 uppercase tracking-widest">v1.2 Advanced Engine</span>
             </div>
             <div class="flex items-center justify-center mb-4">
-                <i class="fas fa-fingerprint text-5xl text-sky-400 mr-4 filter drop-shadow-[0_0_8px_rgba(56,189,248,0.5)]"></i>
-                <h1 class="text-5xl md:text-6xl font-bold tracking-tight">Voice<span class="gradient-text">Shield</span></h1>
+                <i
+                    class="fas fa-fingerprint text-5xl text-sky-400 mr-4 filter drop-shadow-[0_0_8px_rgba(56,189,248,0.5)]"></i>
+                <h1 class="text-5xl md:text-6xl font-bold tracking-tight">Voice<span class="gradient-text">Shield</span>
+                </h1>
             </div>
-            <p class="text-slate-400 text-lg max-w-lg mx-auto leading-relaxed">High-fidelity acoustic fingerprinting to verify the origin of human speech.</p>
+            <p class="text-slate-400 text-lg max-w-lg mx-auto leading-relaxed">High-fidelity acoustic fingerprinting to
+                verify the origin of human speech.</p>
         </header>
 
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
@@ -188,21 +46,32 @@
 
                     <!-- Language Selection -->
                     <div class="mb-8">
-                        <label class="block text-sm font-medium text-slate-400 mb-3 uppercase tracking-wider">Detection Language</label>
+                        <label class="block text-sm font-medium text-slate-400 mb-3 uppercase tracking-wider">Detection
+                            Language</label>
                         <div class="grid grid-cols-2 gap-3" id="lang-grid">
-                            <button onclick="selectLang('english')" class="lang-btn px-4 py-3 rounded-xl border border-white/5 bg-white/5 hover:bg-white/10 transition-all text-sm font-medium active-lang" data-lang="english">
+                            <button onclick="selectLang('english')"
+                                class="lang-btn px-4 py-3 rounded-xl border border-white/5 bg-white/5 hover:bg-white/10 transition-all text-sm font-medium active-lang"
+                                data-lang="english">
                                 <span class="block text-lg mb-1">🇺🇸</span> English
                             </button>
-                            <button onclick="selectLang('hindi')" class="lang-btn px-4 py-3 rounded-xl border border-white/5 bg-white/5 hover:bg-white/10 transition-all text-sm font-medium" data-lang="hindi">
+                            <button onclick="selectLang('hindi')"
+                                class="lang-btn px-4 py-3 rounded-xl border border-white/5 bg-white/5 hover:bg-white/10 transition-all text-sm font-medium"
+                                data-lang="hindi">
                                 <span class="block text-lg mb-1">🇮🇳</span> Hindi
                             </button>
-                            <button onclick="selectLang('tamil')" class="lang-btn px-4 py-3 rounded-xl border border-white/5 bg-white/5 hover:bg-white/10 transition-all text-sm font-medium" data-lang="tamil">
+                            <button onclick="selectLang('tamil')"
+                                class="lang-btn px-4 py-3 rounded-xl border border-white/5 bg-white/5 hover:bg-white/10 transition-all text-sm font-medium"
+                                data-lang="tamil">
                                 <span class="block text-lg mb-1">🇮🇳</span> Tamil
                             </button>
-                            <button onclick="selectLang('malayalam')" class="lang-btn px-4 py-3 rounded-xl border border-white/5 bg-white/5 hover:bg-white/10 transition-all text-sm font-medium" data-lang="malayalam">
+                            <button onclick="selectLang('malayalam')"
+                                class="lang-btn px-4 py-3 rounded-xl border border-white/5 bg-white/5 hover:bg-white/10 transition-all text-sm font-medium"
+                                data-lang="malayalam">
                                 <span class="block text-lg mb-1">🇮🇳</span> Malayalam
                             </button>
-                            <button onclick="selectLang('telugu')" class="lang-btn px-4 py-3 rounded-xl border border-white/5 bg-white/5 hover:bg-white/10 transition-all text-sm font-medium" data-lang="telugu">
+                            <button onclick="selectLang('telugu')"
+                                class="lang-btn px-4 py-3 rounded-xl border border-white/5 bg-white/5 hover:bg-white/10 transition-all text-sm font-medium"
+                                data-lang="telugu">
                                 <span class="block text-lg mb-1">🇮🇳</span> Telugu
                             </button>
                         </div>
@@ -212,7 +81,8 @@
                     <div id="drop-zone" class="upload-area rounded-2xl p-8 text-center cursor-pointer group">
                         <input type="file" id="audio-input" class="hidden" accept="audio/*">
                         <div id="upload-prompt" class="mb-4">
-                            <div class="w-16 h-16 bg-sky-500/10 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+                            <div
+                                class="w-16 h-16 bg-sky-500/10 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
                                 <i class="fas fa-cloud-arrow-up text-2xl text-sky-400"></i>
                             </div>
                             <p class="text-sm font-semibold text-slate-200">Drop audio file here</p>
@@ -229,7 +99,8 @@
                         </div>
                     </div>
 
-                    <button id="analyze-btn" disabled class="w-full mt-6 bg-sky-500 hover:bg-sky-400 disabled:opacity-50 disabled:cursor-not-allowed text-slate-900 font-bold py-4 rounded-xl transition-all btn-glow flex items-center justify-center space-x-3">
+                    <button id="analyze-btn" disabled
+                        class="w-full mt-6 bg-sky-500 hover:bg-sky-400 disabled:opacity-50 disabled:cursor-not-allowed text-slate-900 font-bold py-4 rounded-xl transition-all btn-glow flex items-center justify-center space-x-3">
                         <span>Initiate Scan</span>
                         <i class="fas fa-bolt"></i>
                     </button>
@@ -241,9 +112,12 @@
                         <i class="fas fa-microchip mr-2"></i> Engine Features
                     </div>
                     <ul class="text-sm space-y-3 text-slate-400">
-                        <li class="flex items-center"><i class="fas fa-check-circle text-sky-500/50 mr-2 text-xs"></i> Pitch Variance Analysis</li>
-                        <li class="flex items-center"><i class="fas fa-check-circle text-sky-500/50 mr-2 text-xs"></i> Spectral Flatness Check</li>
-                        <li class="flex items-center"><i class="fas fa-check-circle text-sky-500/50 mr-2 text-xs"></i> Multi-lingual Heuristics</li>
+                        <li class="flex items-center"><i class="fas fa-check-circle text-sky-500/50 mr-2 text-xs"></i>
+                            Pitch Variance Analysis</li>
+                        <li class="flex items-center"><i class="fas fa-check-circle text-sky-500/50 mr-2 text-xs"></i>
+                            Spectral Flatness Check</li>
+                        <li class="flex items-center"><i class="fas fa-check-circle text-sky-500/50 mr-2 text-xs"></i>
+                            Multi-lingual Heuristics</li>
                     </ul>
                 </div>
             </div>
@@ -262,11 +136,13 @@
                             <div class="wave-bar" style="animation-delay: 0.6s"></div>
                         </div>
                         <h4 class="text-slate-500 font-medium mb-2">Awaiting Input Signal</h4>
-                        <p class="text-sm text-slate-600 max-w-xs leading-relaxed">Upload an audio sample to start the neural fingerprinting process.</p>
+                        <p class="text-sm text-slate-600 max-w-xs leading-relaxed">Upload an audio sample to start the
+                            neural fingerprinting process.</p>
                     </div>
 
                     <!-- Loading State -->
-                    <div id="loading-state" class="hidden flex-1 flex flex-col items-center justify-center p-12 scanning">
+                    <div id="loading-state"
+                        class="hidden flex-1 flex flex-col items-center justify-center p-12 scanning">
                         <div class="spinner mb-6"></div>
                         <h4 class="text-xl font-bold mb-2">Isolating Patterns</h4>
                         <p class="text-slate-400 animate-pulse">Running acoustic feature extraction...</p>
@@ -279,7 +155,8 @@
                                 <h3 class="text-2xl font-bold">Analysis Complete</h3>
                                 <p class="text-slate-400 text-sm">Processed using v1.2 engine</p>
                             </div>
-                            <div id="result-badge" class="px-5 py-2 rounded-full font-bold text-sm tracking-widest uppercase"></div>
+                            <div id="result-badge"
+                                class="px-5 py-2 rounded-full font-bold text-sm tracking-widest uppercase"></div>
                         </div>
 
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
@@ -308,7 +185,8 @@
                         </div>
 
                         <div class="mt-auto pt-8">
-                            <button onclick="resetUI()" class="text-slate-500 hover:text-slate-300 transition-colors text-sm font-medium flex items-center">
+                            <button onclick="resetUI()"
+                                class="text-slate-500 hover:text-slate-300 transition-colors text-sm font-medium flex items-center">
                                 <i class="fas fa-redo-alt mr-2"></i> Clear and Analyze New Sample
                             </button>
                         </div>
@@ -324,15 +202,6 @@
         </footer>
     </div>
 
-    <!-- Language button style override -->
-    <style>
-        .active-lang {
-            border-color: var(--primary) !important;
-            background: rgba(56, 189, 248, 0.15) !important;
-            box-shadow: 0 0 15px rgba(56, 189, 248, 0.1);
-        }
-    </style>
-
     <script>
         // State Management
         let selectedLanguage = 'english';
@@ -346,11 +215,11 @@
             fileName: document.getElementById('file-name'),
             fileSize: document.getElementById('file-size'),
             analyzeBtn: document.getElementById('analyze-btn'),
-            
+
             emptyState: document.getElementById('empty-state'),
             loadingState: document.getElementById('loading-state'),
             dataState: document.getElementById('data-state'),
-            
+
             badge: document.getElementById('result-badge'),
             score: document.getElementById('res-score'),
             lang: document.getElementById('res-lang'),
@@ -363,7 +232,7 @@
             selectedLanguage = lang;
             document.querySelectorAll('.lang-btn').forEach(btn => {
                 btn.classList.remove('active-lang');
-                if(btn.dataset.lang === lang) btn.classList.add('active-lang');
+                if (btn.dataset.lang === lang) btn.classList.add('active-lang');
             });
         };
 
@@ -386,7 +255,7 @@
 
         function handleFileSelection(file) {
             if (!file) return;
-            
+
             if (!file.type.match('audio.*')) {
                 alert('Invalid file format. Please upload an audio file.');
                 return;
@@ -394,7 +263,7 @@
 
             dom.fileName.textContent = file.name;
             dom.fileSize.textContent = `${(file.size / (1024 * 1024)).toFixed(2)} MB`;
-            
+
             const reader = new FileReader();
             reader.onload = (e) => {
                 currentFileBase64 = e.target.result.split(',')[1];
@@ -411,7 +280,7 @@
             dom.uploadPrompt.classList.remove('hidden');
             dom.fileInfo.classList.add('hidden');
             dom.analyzeBtn.disabled = true;
-            
+
             dom.dataState.classList.add('hidden');
             dom.loadingState.classList.add('hidden');
             dom.emptyState.classList.remove('hidden');
@@ -452,15 +321,15 @@
         function showResults(data) {
             dom.loadingState.classList.add('hidden');
             dom.dataState.classList.remove('hidden');
-            
+
             const isAI = data.classification === 'AI_GENERATED';
-            
+
             // Badge Styles
             dom.badge.textContent = isAI ? 'Synthetic' : 'Authentic';
-            dom.badge.className = isAI ? 
+            dom.badge.className = isAI ?
                 'px-5 py-2 rounded-full font-bold text-sm tracking-widest uppercase bg-rose-500/10 text-rose-500 border border-rose-500/20' :
                 'px-5 py-2 rounded-full font-bold text-sm tracking-widest uppercase bg-emerald-500/10 text-emerald-500 border border-emerald-500/20';
-            
+
             // Metrics
             dom.score.textContent = `${Math.round(data.confidenceScore * 100)}%`;
             dom.lang.textContent = data.language;
