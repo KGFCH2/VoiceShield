@@ -8,284 +8,428 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap');
+
+        :root {
+            --primary: #38bdf8;
+            --primary-glow: rgba(56, 189, 248, 0.3);
+            --accent: #818cf8;
+            --bg: #030712;
+            --card-bg: rgba(17, 24, 39, 0.7);
+        }
 
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: #0f172a;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg);
             color: #f8fafc;
+            overflow-x: hidden;
+        }
+
+        /* Animated Mesh Background */
+        .mesh-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: 
+                radial-gradient(at 0% 0%, rgba(56, 189, 248, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 0%, rgba(129, 140, 248, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(56, 189, 248, 0.1) 0px, transparent 50%),
+                radial-gradient(at 0% 100%, rgba(129, 140, 248, 0.1) 0px, transparent 50%);
+            filter: blur(80px);
+            animation: moveBg 20s ease infinite alternate;
+        }
+
+        @keyframes moveBg {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.1); }
         }
 
         .glass-card {
-            background: rgba(30, 41, 59, 0.7);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 24px;
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 28px;
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .glass-card:hover {
+            border-color: rgba(56, 189, 248, 0.2);
+            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.6);
         }
 
         .gradient-text {
-            background: linear-gradient(90deg, #38bdf8, #818cf8);
+            background: linear-gradient(135deg, #7dd3fc 0%, #a5b4fc 100%);
             background-clip: text;
-            -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 8px rgba(56, 189, 248, 0.3));
         }
 
         .upload-area {
-            border: 2px dashed rgba(255, 255, 255, 0.2);
+            border: 2px dashed rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.02);
             transition: all 0.3s ease;
         }
 
-        .upload-area:hover {
-            border-color: #38bdf8;
-            background: rgba(56, 189, 248, 0.05);
+        .upload-area.active {
+            border-color: var(--primary);
+            background: rgba(56, 189, 248, 0.08);
+            transform: scale(1.02);
+        }
+
+        .btn-glow:hover:not(:disabled) {
+            box-shadow: 0 0 20px var(--primary-glow);
+            transform: translateY(-2px);
+        }
+
+        /* Scan Animation */
+        .scanning {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .scanning::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+            animation: scan 2s linear infinite;
+            box-shadow: 0 0 15px var(--primary);
+        }
+
+        @keyframes scan {
+            0% { top: 0; }
+            100% { top: 100%; }
+        }
+
+        /* Waveform simulation */
+        .wave-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 3px;
+            height: 40px;
+        }
+
+        .wave-bar {
+            width: 3px;
+            height: 10px;
+            background: var(--primary);
+            border-radius: 50px;
+            animation: pulse-wave 1s ease-in-out infinite;
+            opacity: 0.3;
+        }
+
+        @keyframes pulse-wave {
+            0%, 100% { height: 10px; }
+            50% { height: 30px; }
+        }
+
+        .reveal-anim {
+            animation: reveal 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        @keyframes reveal {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .spinner {
-            border: 3px solid rgba(255, 255, 255, 0.1);
-            border-top: 3px solid #38bdf8;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-top: 2px solid var(--primary);
             border-radius: 50%;
-            width: 24px;
-            height: 24px;
-            animation: spin 1s linear infinite;
+            width: 20px;
+            height: 20px;
+            animation: spin 0.8s linear infinite;
         }
 
         @keyframes spin {
-            0% {
-                transform: rotate(0deg);
-            }
-
-            100% {
-                transform: rotate(360deg);
-            }
+            to { transform: rotate(360deg); }
         }
     </style>
 </head>
 
-<body class="min-h-screen p-4 md:p-8">
-    <div class="max-w-4xl mx-auto">
+<body class="min-h-screen p-4 md:p-8 flex items-center justify-center">
+    <!-- Animated background -->
+    <div class="mesh-bg"></div>
+
+    <div class="max-w-5xl w-full mx-auto">
         <!-- Header -->
-        <header class="text-center mb-12">
-            <div class="flex items-center justify-center mb-4">
-                <i class="fas fa-shield-halved text-4xl text-sky-400 mr-3"></i>
-                <h1 class="text-4xl font-bold tracking-tight">Voice<span class="gradient-text">Shield</span></h1>
+        <header class="text-center mb-16 reveal-anim">
+            <div class="inline-flex items-center justify-center bg-sky-500/10 border border-sky-500/20 rounded-full px-4 py-1.5 mb-6">
+                <span class="flex h-2 w-2 mr-2">
+                    <span class="animate-ping absolute inline-flex h-2 w-2 rounded-full bg-sky-400 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2 w-2 bg-sky-500"></span>
+                </span>
+                <span class="text-xs font-bold text-sky-400 uppercase tracking-widest">v1.2 Advanced Engine</span>
             </div>
-            <p class="text-slate-400 text-lg">AI-Generated Voice Detection System</p>
+            <div class="flex items-center justify-center mb-4">
+                <i class="fas fa-fingerprint text-5xl text-sky-400 mr-4 filter drop-shadow-[0_0_8px_rgba(56,189,248,0.5)]"></i>
+                <h1 class="text-5xl md:text-6xl font-bold tracking-tight">Voice<span class="gradient-text">Shield</span></h1>
+            </div>
+            <p class="text-slate-400 text-lg max-w-lg mx-auto leading-relaxed">High-fidelity acoustic fingerprinting to verify the origin of human speech.</p>
         </header>
 
-        <div class="grid md:grid-cols-5 gap-8">
-            <!-- Left Side: Inputs -->
-            <div class="md:col-span-3 space-y-6">
-                <!-- Config Card -->
-                <div class="glass-card p-6">
-                    <h2 class="text-xl font-semibold mb-4 flex items-center">
-                        <i class="fas fa-sliders mr-2 text-sky-400"></i> Configuration
-                    </h2>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-sm font-medium text-slate-400 mb-2">Language</label>
-                            <select id="languageSelect"
-                                class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-2 text-white focus:ring-2 focus:ring-sky-500 focus:outline-none transition-all">
-                                <option value="Tamil">Tamil</option>
-                                <option value="English" selected>English</option>
-                                <option value="Hindi">Hindi</option>
-                                <option value="Malayalam">Malayalam</option>
-                                <option value="Telugu">Telugu</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-slate-400 mb-2">API Key</label>
-                            <input type="password" id="apiKeyInput" value="sk_test_123456789"
-                                class="w-full bg-slate-800 border border-slate-700 rounded-xl px-4 py-2 text-white focus:ring-2 focus:ring-sky-500 focus:outline-none transition-all">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            <!-- Left Side: Control Panel -->
+            <div class="lg:col-span-5 space-y-6 reveal-anim" style="animation-delay: 0.1s">
+                <div class="glass-card p-8">
+                    <h3 class="text-xl font-semibold mb-6 flex items-center">
+                        <i class="fas fa-sliders-h mr-3 text-sky-400"></i>
+                        Analysis Parameters
+                    </h3>
+
+                    <!-- Language Selection -->
+                    <div class="mb-8">
+                        <label class="block text-sm font-medium text-slate-400 mb-3 uppercase tracking-wider">Detection Language</label>
+                        <div class="grid grid-cols-2 gap-3" id="lang-grid">
+                            <button onclick="selectLang('english')" class="lang-btn px-4 py-3 rounded-xl border border-white/5 bg-white/5 hover:bg-white/10 transition-all text-sm font-medium active-lang" data-lang="english">
+                                <span class="block text-lg mb-1">🇺🇸</span> English
+                            </button>
+                            <button onclick="selectLang('hindi')" class="lang-btn px-4 py-3 rounded-xl border border-white/5 bg-white/5 hover:bg-white/10 transition-all text-sm font-medium" data-lang="hindi">
+                                <span class="block text-lg mb-1">🇮🇳</span> Hindi
+                            </button>
+                            <button onclick="selectLang('tamil')" class="lang-btn px-4 py-3 rounded-xl border border-white/5 bg-white/5 hover:bg-white/10 transition-all text-sm font-medium" data-lang="tamil">
+                                <span class="block text-lg mb-1">🇮🇳</span> Tamil
+                            </button>
+                            <button onclick="selectLang('malayalam')" class="lang-btn px-4 py-3 rounded-xl border border-white/5 bg-white/5 hover:bg-white/10 transition-all text-sm font-medium" data-lang="malayalam">
+                                <span class="block text-lg mb-1">🇮🇳</span> Malayalam
+                            </button>
+                            <button onclick="selectLang('telugu')" class="lang-btn px-4 py-3 rounded-xl border border-white/5 bg-white/5 hover:bg-white/10 transition-all text-sm font-medium" data-lang="telugu">
+                                <span class="block text-lg mb-1">🇮🇳</span> Telugu
+                            </button>
                         </div>
                     </div>
-                </div>
 
-                <!-- Upload Card -->
-                <div class="glass-card p-6">
-                    <h2 class="text-xl font-semibold mb-4 flex items-center">
-                        <i class="fas fa-file-audio mr-2 text-sky-400"></i> Audio Sample
-                    </h2>
-                    <div id="dropZone"
-                        class="upload-area h-48 rounded-2xl flex flex-col items-center justify-center cursor-pointer mb-4">
-                        <i class="fas fa-cloud-arrow-up text-4xl text-slate-500 mb-2"></i>
-                        <p class="text-slate-400">Click or Drag MP3 File</p>
-                        <p class="text-xs text-slate-500 mt-1">Maximum size: 10MB</p>
-                        <input type="file" id="fileInput" accept="audio/mpeg" class="hidden">
-                    </div>
-
-                    <div id="filePreview" class="hidden bg-slate-800 rounded-xl p-4 flex items-center justify-between">
-                        <div class="flex items-center">
-                            <i class="fas fa-file-audio text-sky-400 text-2xl mr-3"></i>
-                            <div>
-                                <p id="fileName" class="text-sm font-medium truncate max-w-[150px]">sample.mp3</p>
-                                <p id="fileSize" class="text-xs text-slate-500">1.2 MB</p>
+                    <!-- File Upload -->
+                    <div id="drop-zone" class="upload-area rounded-2xl p-8 text-center cursor-pointer group">
+                        <input type="file" id="audio-input" class="hidden" accept="audio/*">
+                        <div id="upload-prompt" class="mb-4">
+                            <div class="w-16 h-16 bg-sky-500/10 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+                                <i class="fas fa-cloud-arrow-up text-2xl text-sky-400"></i>
+                            </div>
+                            <p class="text-sm font-semibold text-slate-200">Drop audio file here</p>
+                            <p class="text-xs text-slate-500 mt-1">MP3, WAV, M4A (Max 10MB)</p>
+                        </div>
+                        <div id="file-info" class="hidden">
+                            <div class="bg-white/5 rounded-lg p-3 flex items-center text-left">
+                                <i class="far fa-file-audio text-sky-400 mr-3 text-xl"></i>
+                                <div class="overflow-hidden">
+                                    <p id="file-name" class="text-sm font-medium truncate"></p>
+                                    <p id="file-size" class="text-xs text-slate-500"></p>
+                                </div>
                             </div>
                         </div>
-                        <button id="removeFile" class="text-slate-500 hover:text-red-400 transition-colors">
-                            <i class="fas fa-times"></i>
-                        </button>
                     </div>
 
-                    <div class="mt-6">
-                        <button id="detectBtn" disabled
-                            class="w-full bg-sky-600 hover:bg-sky-500 disabled:bg-slate-700 disabled:cursor-not-allowed text-white font-bold py-3 rounded-xl shadow-lg transition-all flex items-center justify-center">
-                            <span id="btnText">Run Detection</span>
-                            <div id="btnLoader" class="spinner ml-3 hidden"></div>
-                        </button>
+                    <button id="analyze-btn" disabled class="w-full mt-6 bg-sky-500 hover:bg-sky-400 disabled:opacity-50 disabled:cursor-not-allowed text-slate-900 font-bold py-4 rounded-xl transition-all btn-glow flex items-center justify-center space-x-3">
+                        <span>Initiate Scan</span>
+                        <i class="fas fa-bolt"></i>
+                    </button>
+                </div>
+
+                <!-- Capabilities Card -->
+                <div class="glass-card p-6 bg-sky-500/5">
+                    <div class="flex items-center text-xs font-bold text-sky-400 uppercase tracking-widest mb-4">
+                        <i class="fas fa-microchip mr-2"></i> Engine Features
                     </div>
+                    <ul class="text-sm space-y-3 text-slate-400">
+                        <li class="flex items-center"><i class="fas fa-check-circle text-sky-500/50 mr-2 text-xs"></i> Pitch Variance Analysis</li>
+                        <li class="flex items-center"><i class="fas fa-check-circle text-sky-500/50 mr-2 text-xs"></i> Spectral Flatness Check</li>
+                        <li class="flex items-center"><i class="fas fa-check-circle text-sky-500/50 mr-2 text-xs"></i> Multi-lingual Heuristics</li>
+                    </ul>
                 </div>
             </div>
 
-            <!-- Right Side: Results -->
-            <div class="md:col-span-2">
-                <div id="resultCard"
-                    class="glass-card p-8 h-full min-h-[400px] flex flex-col justify-center text-center opacity-50">
-                    <div id="emptyState">
-                        <i class="fas fa-microscope text-6xl text-slate-700 mb-4"></i>
-                        <h3 class="text-xl font-semibold text-slate-500">Awaiting Analysis</h3>
-                        <p class="text-slate-600 text-sm mt-2">Upload an audio sample to start the verification process.
-                        </p>
+            <!-- Right Side: Visualization & Results -->
+            <div class="lg:col-span-7 reveal-anim" style="animation-delay: 0.2s">
+                <div id="result-container" class="glass-card min-h-[500px] flex flex-col overflow-hidden">
+                    <!-- Default State -->
+                    <div id="empty-state" class="flex-1 flex flex-col items-center justify-center p-12 text-center">
+                        <div class="wave-container mb-6">
+                            <div class="wave-bar" style="animation-delay: 0.1s"></div>
+                            <div class="wave-bar" style="animation-delay: 0.2s"></div>
+                            <div class="wave-bar" style="animation-delay: 0.3s"></div>
+                            <div class="wave-bar" style="animation-delay: 0.4s"></div>
+                            <div class="wave-bar" style="animation-delay: 0.5s"></div>
+                            <div class="wave-bar" style="animation-delay: 0.6s"></div>
+                        </div>
+                        <h4 class="text-slate-500 font-medium mb-2">Awaiting Input Signal</h4>
+                        <p class="text-sm text-slate-600 max-w-xs leading-relaxed">Upload an audio sample to start the neural fingerprinting process.</p>
                     </div>
 
-                    <div id="resultState" class="hidden space-y-6">
-                        <div>
-                            <p class="text-slate-400 text-sm uppercase tracking-widest mb-2 font-semibold">
-                                Classification</p>
-                            <div id="badge"
-                                class="inline-block px-6 py-2 rounded-full text-xl font-bold shadow-2xl transition-all duration-500">
-                                HUMAN
-                            </div>
-                        </div>
-
-                        <div>
-                            <div class="flex justify-between items-end mb-2">
-                                <span class="text-slate-400 text-sm">Confidence</span>
-                                <span id="confidenceText" class="text-2xl font-bold text-sky-400">92%</span>
-                            </div>
-                            <div class="h-3 w-full bg-slate-800 rounded-full overflow-hidden">
-                                <div id="confidenceBar"
-                                    class="h-full bg-gradient-to-r from-sky-500 to-indigo-500 rounded-full transition-all duration-1000"
-                                    style="width: 0%"></div>
-                            </div>
-                        </div>
-
-                        <div class="text-left bg-slate-800/50 rounded-2xl p-4 border border-slate-700">
-                            <p class="text-sky-400 text-xs font-bold uppercase mb-2">Key Indicators</p>
-                            <p id="explanation" class="text-slate-300 text-sm leading-relaxed italic">
-                                "Analysis detected natural breathing patterns and expressive vocal variations."
-                            </p>
-                        </div>
+                    <!-- Loading State -->
+                    <div id="loading-state" class="hidden flex-1 flex flex-col items-center justify-center p-12 scanning">
+                        <div class="spinner mb-6"></div>
+                        <h4 class="text-xl font-bold mb-2">Isolating Patterns</h4>
+                        <p class="text-slate-400 animate-pulse">Running acoustic feature extraction...</p>
                     </div>
 
-                    <div id="errorState" class="hidden text-red-400">
-                        <i class="fas fa-circle-exclamation text-5xl mb-4"></i>
-                        <h3 class="text-xl font-bold">Analysis Failed</h3>
-                        <p id="errorMsg" class="text-sm mt-2">Sample too short or invalid format.</p>
+                    <!-- Results State -->
+                    <div id="data-state" class="hidden flex-1 p-8">
+                        <div class="flex items-center justify-between mb-8 border-b border-white/5 pb-6">
+                            <div>
+                                <h3 class="text-2xl font-bold">Analysis Complete</h3>
+                                <p class="text-slate-400 text-sm">Processed using v1.2 engine</p>
+                            </div>
+                            <div id="result-badge" class="px-5 py-2 rounded-full font-bold text-sm tracking-widest uppercase"></div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+                            <div class="bg-white/5 rounded-2xl p-5 border border-white/5">
+                                <p class="text-xs font-bold text-slate-500 uppercase mb-2">Confidence</p>
+                                <p id="res-score" class="text-3xl font-bold"></p>
+                            </div>
+                            <div class="bg-white/5 rounded-2xl p-5 border border-white/5">
+                                <p class="text-xs font-bold text-slate-500 uppercase mb-2">Language</p>
+                                <p id="res-lang" class="text-2xl font-bold text-sky-400"></p>
+                            </div>
+                            <div class="bg-white/5 rounded-2xl p-5 border border-white/5">
+                                <p class="text-xs font-bold text-slate-500 uppercase mb-2">Integrity</p>
+                                <p id="res-status" class="text-lg font-bold"></p>
+                            </div>
+                        </div>
+
+                        <div class="space-y-4">
+                            <h4 class="font-semibold text-slate-300 flex items-center">
+                                <i class="fas fa-list-check mr-2 text-sky-400"></i>
+                                Heuristic Insights
+                            </h4>
+                            <div id="res-insights" class="space-y-2">
+                                <!-- Dynamic insights go here -->
+                            </div>
+                        </div>
+
+                        <div class="mt-auto pt-8">
+                            <button onclick="resetUI()" class="text-slate-500 hover:text-slate-300 transition-colors text-sm font-medium flex items-center">
+                                <i class="fas fa-redo-alt mr-2"></i> Clear and Analyze New Sample
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <footer class="mt-12 text-center text-slate-500 text-sm">
-            Powered by VoiceShield Engine v1.0.0 &bull; Heuristic Audio Analysis
+        <footer class="mt-16 text-center reveal-anim" style="animation-delay: 0.4s">
+            <p class="text-slate-600 text-xs font-medium tracking-[0.2em] uppercase">
+                Enterprise Shield &bull; Local Secure Node 8001
+            </p>
         </footer>
     </div>
 
-    <script>
-        const dropZone = document.getElementById('dropZone');
-        const fileInput = document.getElementById('fileInput');
-        const filePreview = document.getElementById('filePreview');
-        const fileName = document.getElementById('fileName');
-        const fileSize = document.getElementById('fileSize');
-        const removeFile = document.getElementById('removeFile');
-        const detectBtn = document.getElementById('detectBtn');
-        const resultCard = document.getElementById('resultCard');
-        const emptyState = document.getElementById('emptyState');
-        const resultState = document.getElementById('resultState');
-        const errorState = document.getElementById('errorState');
-        const errorMsg = document.getElementById('errorMsg');
+    <!-- Language button style override -->
+    <style>
+        .active-lang {
+            border-color: var(--primary) !important;
+            background: rgba(56, 189, 248, 0.15) !important;
+            box-shadow: 0 0 15px rgba(56, 189, 248, 0.1);
+        }
+    </style>
 
+    <script>
+        // State Management
+        let selectedLanguage = 'english';
         let currentFileBase64 = null;
 
-        // File Selection
-        dropZone.onclick = () => fileInput.click();
-
-        fileInput.onchange = (e) => handleFiles(e.target.files);
-
-        dropZone.ondragover = (e) => { e.preventDefault(); dropZone.classList.add('border-sky-500'); };
-        dropZone.ondragleave = () => dropZone.classList.remove('border-sky-500');
-        dropZone.ondrop = (e) => {
-            e.preventDefault();
-            dropZone.classList.remove('border-sky-500');
-            handleFiles(e.dataTransfer.files);
+        const dom = {
+            dropZone: document.getElementById('drop-zone'),
+            fileInput: document.getElementById('audio-input'),
+            uploadPrompt: document.getElementById('upload-prompt'),
+            fileInfo: document.getElementById('file-info'),
+            fileName: document.getElementById('file-name'),
+            fileSize: document.getElementById('file-size'),
+            analyzeBtn: document.getElementById('analyze-btn'),
+            
+            emptyState: document.getElementById('empty-state'),
+            loadingState: document.getElementById('loading-state'),
+            dataState: document.getElementById('data-state'),
+            
+            badge: document.getElementById('result-badge'),
+            score: document.getElementById('res-score'),
+            lang: document.getElementById('res-lang'),
+            status: document.getElementById('res-status'),
+            insights: document.getElementById('res-insights')
         };
 
-        function handleFiles(files) {
-            if (!files[0]) return;
-            const file = files[0];
+        // Language Selection
+        window.selectLang = (lang) => {
+            selectedLanguage = lang;
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active-lang');
+                if(btn.dataset.lang === lang) btn.classList.add('active-lang');
+            });
+        };
 
-            if (file.type !== 'audio/mpeg') {
-                alert('Please upload an MP3 file.');
+        // File Handlers
+        dom.dropZone.onclick = () => dom.fileInput.click();
+        dom.fileInput.onchange = (e) => handleFileSelection(e.target.files[0]);
+
+        dom.dropZone.ondragover = (e) => {
+            e.preventDefault();
+            dom.dropZone.classList.add('active');
+        };
+
+        dom.dropZone.ondragleave = () => dom.dropZone.classList.remove('active');
+
+        dom.dropZone.ondrop = (e) => {
+            e.preventDefault();
+            dom.dropZone.classList.remove('active');
+            handleFileSelection(e.dataTransfer.files[0]);
+        };
+
+        function handleFileSelection(file) {
+            if (!file) return;
+            
+            if (!file.type.match('audio.*')) {
+                alert('Invalid file format. Please upload an audio file.');
                 return;
             }
 
-            fileName.textContent = file.name;
-            fileSize.textContent = (file.size / (1024 * 1024)).toFixed(2) + ' MB';
-
+            dom.fileName.textContent = file.name;
+            dom.fileSize.textContent = `${(file.size / (1024 * 1024)).toFixed(2)} MB`;
+            
             const reader = new FileReader();
             reader.onload = (e) => {
                 currentFileBase64 = e.target.result.split(',')[1];
-                filePreview.classList.remove('hidden');
-                dropZone.classList.add('hidden');
-                detectBtn.disabled = false;
+                dom.uploadPrompt.classList.add('hidden');
+                dom.fileInfo.classList.remove('hidden');
+                dom.analyzeBtn.disabled = false;
             };
             reader.readAsDataURL(file);
         }
 
-        removeFile.onclick = () => {
-            currentFileBase64 = null;
-            fileInput.value = '';
-            filePreview.classList.add('hidden');
-            dropZone.classList.remove('hidden');
-            detectBtn.disabled = true;
-            resetUI();
-        };
-
         function resetUI() {
-            resultCard.classList.add('opacity-50');
-            emptyState.classList.remove('hidden');
-            resultState.classList.add('hidden');
-            errorState.classList.add('hidden');
+            currentFileBase64 = null;
+            dom.fileInput.value = '';
+            dom.uploadPrompt.classList.remove('hidden');
+            dom.fileInfo.classList.add('hidden');
+            dom.analyzeBtn.disabled = true;
+            
+            dom.dataState.classList.add('hidden');
+            dom.loadingState.classList.add('hidden');
+            dom.emptyState.classList.remove('hidden');
         }
 
-        // API Call
-        detectBtn.onclick = async () => {
-            const apiKey = document.getElementById('apiKeyInput').value;
-            const language = document.getElementById('languageSelect').value;
-            const btnText = document.getElementById('btnText');
-            const btnLoader = document.getElementById('btnLoader');
-
-            if (!apiKey) {
-                alert('Please enter an API key');
-                return;
-            }
-
-            // UI Loading state
-            detectBtn.disabled = true;
-            btnText.textContent = 'Analyzing...';
-            btnLoader.classList.remove('hidden');
-            resetUI();
-            resultCard.classList.remove('opacity-50');
+        // API Integration
+        dom.analyzeBtn.onclick = async () => {
+            // UI State
+            dom.emptyState.classList.add('hidden');
+            dom.loadingState.classList.remove('hidden');
+            dom.analyzeBtn.disabled = true;
 
             try {
                 const response = await fetch('http://127.0.0.1:8001/api/voice-detection', {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'x-api-key': apiKey
-                    },
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        language: language,
+                        language: selectedLanguage,
                         audioFormat: 'mp3',
                         audioBase64: currentFileBase64
                     })
@@ -294,48 +438,44 @@
                 const data = await response.json();
 
                 if (response.ok && data.status === 'success') {
-                    showResult(data);
+                    showResults(data);
                 } else {
-                    showError(data.detail?.message || data.message || 'Detection failed');
+                    alert(`Error: ${data.detail?.message || 'Analysis failed'}`);
+                    resetUI();
                 }
             } catch (err) {
-                showError('Could not connect to the API server.');
-            } finally {
-                detectBtn.disabled = false;
-                btnText.textContent = 'Run Detection';
-                btnLoader.classList.add('hidden');
+                alert('Connection Error: Is the backend server running on port 8001?');
+                resetUI();
             }
         };
 
-        function showResult(data) {
-            emptyState.classList.add('hidden');
-            errorState.classList.add('hidden');
-            resultState.classList.remove('hidden');
-
-            const badge = document.getElementById('badge');
-            const confBar = document.getElementById('confidenceBar');
-            const confText = document.getElementById('confidenceText');
-            const expl = document.getElementById('explanation');
-
+        function showResults(data) {
+            dom.loadingState.classList.add('hidden');
+            dom.dataState.classList.remove('hidden');
+            
             const isAI = data.classification === 'AI_GENERATED';
-            badge.textContent = isAI ? 'AI GENERATED' : 'HUMAN';
-            badge.className = isAI ?
-                'inline-block px-6 py-2 rounded-full text-xl font-bold shadow-2xl bg-red-900/50 text-red-400 border border-red-500' :
-                'inline-block px-6 py-2 rounded-full text-xl font-bold shadow-2xl bg-emerald-900/50 text-emerald-400 border border-emerald-500';
+            
+            // Badge Styles
+            dom.badge.textContent = isAI ? 'Synthetic' : 'Authentic';
+            dom.badge.className = isAI ? 
+                'px-5 py-2 rounded-full font-bold text-sm tracking-widest uppercase bg-rose-500/10 text-rose-500 border border-rose-500/20' :
+                'px-5 py-2 rounded-full font-bold text-sm tracking-widest uppercase bg-emerald-500/10 text-emerald-500 border border-emerald-500/20';
+            
+            // Metrics
+            dom.score.textContent = `${Math.round(data.confidenceScore * 100)}%`;
+            dom.lang.textContent = data.language;
+            dom.status.textContent = isAI ? 'AI Detected' : 'Human Verified';
+            dom.status.className = isAI ? 'text-lg font-bold text-rose-500' : 'text-lg font-bold text-emerald-500';
 
-            const conf = Math.round(data.confidenceScore * 100);
-            confText.textContent = conf + '%';
-            confBar.style.width = conf + '%';
-            confBar.className = isAI ? 'h-full bg-gradient-to-r from-red-500 to-orange-500 rounded-full transition-all duration-1000' : 'h-full bg-gradient-to-r from-emerald-500 to-sky-500 rounded-full transition-all duration-1000';
-
-            expl.textContent = `"${data.explanation}"`;
-        }
-
-        function showError(msg) {
-            emptyState.classList.add('hidden');
-            resultState.classList.add('hidden');
-            errorState.classList.remove('hidden');
-            errorMsg.textContent = msg;
+            // Insights
+            dom.insights.innerHTML = '';
+            const insights = data.explanation.split('.').filter(s => s.trim().length > 0);
+            insights.forEach(text => {
+                const div = document.createElement('div');
+                div.className = 'flex items-start p-3 bg-white/5 rounded-xl border border-white/5 text-sm text-slate-300';
+                div.innerHTML = `<i class="fas fa-info-circle mt-1 mr-3 text-sky-400"></i><span>${text.trim()}.</span>`;
+                dom.insights.appendChild(div);
+            });
         }
     </script>
 </body>
