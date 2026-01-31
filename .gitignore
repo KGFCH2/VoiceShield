@@ -1,0 +1,12 @@
+﻿# Virtual Environment
+.venv/
+
+# Sensitive Configuration
+.env
+backend/.env
+
+# Python Cache
+**/__pycache__/
+
+# IDE Settings
+.vscode/
