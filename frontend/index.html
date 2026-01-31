@@ -79,11 +79,20 @@
                     </div>
 
                     <!-- Loading State -->
-                    <div id="loading-state"
-                        class="hidden flex-1 flex flex-col items-center justify-center p-8 scanning">
-                        <div class="spinner mb-4"></div>
-                        <h4 class="text-lg font-bold mb-1">Analyzing...</h4>
-                        <p class="text-slate-400 text-sm animate-pulse">Checking voice patterns</p>
+                    <div id="loading-state" class="hidden flex-1 flex flex-col items-center justify-center p-12 scanning">
+                        <div class="loader-visual mb-6">
+                            <div class="loader-ring"></div>
+                            <div class="loader-ring"></div>
+                            <div class="loader-ring"></div>
+                            <i class="fas fa-shield-halved text-3xl text-sky-400 loader-icon"></i>
+                        </div>
+                        <h4 class="text-xl font-bold mb-2 tracking-tight">Protecting Analysis</h4>
+                        <p class="text-slate-400 text-sm animate-pulse">Scanning acoustic fingerprints...</p>
+                        <div class="mt-8 flex gap-1">
+                            <span class="loading-dot"></span>
+                            <span class="loading-dot"></span>
+                            <span class="loading-dot"></span>
+                        </div>
                     </div>
 
                     <!-- Results State -->
@@ -125,7 +134,8 @@
 
         <footer class="mt-12 text-center reveal-anim" style="animation-delay: 0.4s">
             <p class="text-slate-500 text-xs font-semibold tracking-wider">
-                Made with <i class="fas fa-heart text-rose-500 animate-pulse mx-1"></i> by <span class="text-sky-400">Babin</span>
+                Made with <i class="fas fa-heart text-rose-500 animate-pulse mx-1"></i> by <span
+                    class="text-sky-400">Babin</span>
             </p>
             <p class="text-slate-600 text-[10px] font-bold tracking-widest uppercase mt-2 opacity-50">
                 Secure Voice Detection Node
