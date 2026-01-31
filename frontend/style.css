@@ -104,9 +104,17 @@ body {
 }
 
 @keyframes button-pulse {
-    0% { box-shadow: 0 0 0 0 rgba(56, 189, 248, 0.4); }
-    70% { box-shadow: 0 0 0 10px rgba(56, 189, 248, 0); }
-    100% { box-shadow: 0 0 0 0 rgba(56, 189, 248, 0); }
+    0% {
+        box-shadow: 0 0 0 0 rgba(56, 189, 248, 0.4);
+    }
+
+    70% {
+        box-shadow: 0 0 0 10px rgba(56, 189, 248, 0);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(56, 189, 248, 0);
+    }
 }
 
 /* Icon Float Animation */
@@ -115,8 +123,15 @@ body {
 }
 
 @keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
 }
 
 /* Insight Card Hover */
@@ -128,6 +143,38 @@ body {
     background: rgba(255, 255, 255, 0.08);
     border-color: rgba(56, 189, 248, 0.2);
     transform: translateX(5px);
+}
+
+.insight-card:hover i {
+    transform: scale(1.2) rotate(10deg);
+    color: #fff;
+    text-shadow: 0 0 10px var(--primary);
+}
+
+/* Icon Effects */
+i {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-card:hover h3 i {
+    transform: rotate(20deg) scale(1.1);
+    color: #fff;
+}
+
+.upload-area:hover .fa-upload {
+    transform: translateY(-5px) scale(1.2);
+    color: #fff;
+    filter: drop-shadow(0 0 8px var(--primary));
+}
+
+.btn-glow:hover i {
+    transform: translateX(3px) scale(1.1);
+}
+
+footer p:hover i.fa-heart {
+    transform: scale(1.4);
+    color: #ff4d4d;
+    filter: drop-shadow(0 0 8px #ff4d4d);
 }
 
 /* Scan Animation */
