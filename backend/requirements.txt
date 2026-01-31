@@ -1,6 +1,5 @@
 # Build and Package Compatibility
 setuptools
-pkg-resources
 
 # AI Voice Detection API - Dependencies
 # Core Framework
