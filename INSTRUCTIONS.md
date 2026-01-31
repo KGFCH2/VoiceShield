@@ -21,8 +21,8 @@ This project is a REST API built with FastAPI that uses heuristic-based audio si
     Run from the `backend` directory.
     ```powershell
     cd backend
-    # Try port 8000 (default) or 8001 if 8000 is in use
-    uvicorn app.main:app --reload --host 127.0.0.1 --port 8001
+    # Runs on port 8000 by default
+    uvicorn app.main:app --reload --host 127.0.0.1 --port 8000
     ```
 
 4.  **Testing**:
@@ -40,18 +40,17 @@ A modern, web-based dashboard is provided in the `frontend/` directory. You can 
 **[https://voice-shield.vercel.app/](https://voice-shield.vercel.app/)**
 
 ### **How to use the Dashboard:**
-1.  Ensure your API server is running (`port 8001`).
+1.  Ensure your API server is running (`port 8000`).
 2.  Open **[frontend/index.html](frontend/index.html)** directly in your web browser (Chrome/Edge recommended).
 3.  **Upload** an MP3 file (drag and drop or click).
-4.  Select the **Language**.
-5.  Click **Run Detection**.
+4.  Click **Check Voice**.
 
 ---
 
 ## 🧪 API Testing Guide
 
 ### **Standard Request Format (JSON)**
-When testing via Swagger ([http://127.0.0.1:8001/docs](http://127.0.0.1:8001/docs)) or external testers:
+When testing via Swagger ([http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)) or external testers:
 
 **Headers:**
 *   `x-api-key`: `sk_test_123456789`
