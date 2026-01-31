@@ -95,6 +95,12 @@ def extract_audio_features(audio: np.ndarray, sr: int) -> Dict[str, Any]:
     """
     features = {}
     
+    # 🏎️ PERFORMANCE OPTIMIZATION: Limit audio to first 8 seconds for faster analysis
+    # Most AI detection patterns are visible within the first few seconds.
+    max_samples = sr * 8
+    if len(audio) > max_samples:
+        audio = audio[:max_samples]
+    
     # Ensure minimum audio length
     if len(audio) < sr * 0.5:  # At least 0.5 seconds
         # Pad with zeros if too short
@@ -136,13 +142,14 @@ def extract_audio_features(audio: np.ndarray, sr: int) -> Dict[str, Any]:
     features['rms_mean'] = np.mean(rms)
     features['rms_std'] = np.std(rms)
     
-    # 8. Pitch/F0 Analysis
+    # 8. Pitch/F0 Analysis - ⚡ Optimized hop_length for speed
     try:
         f0, voiced_flag, voiced_probs = librosa.pyin(
             audio, 
             fmin=librosa.note_to_hz('C2'),
             fmax=librosa.note_to_hz('C7'),
-            sr=sr
+            sr=sr,
+            hop_length=1024  # Increased from default 512 for 2x speedup
         )
         f0_valid = f0[~np.isnan(f0)]
         if len(f0_valid) > 0:
