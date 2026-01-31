@@ -36,7 +36,8 @@ This project is a REST API built with FastAPI that uses heuristic-based audio si
 
 ## 🎨 Frontend Dashboard (Project Demo)
 
-A modern, web-based dashboard is provided in the `frontend/` directory. This allows you to visualize the detection results with confidence bars and detailed indicators.
+A modern, web-based dashboard is provided in the `frontend/` directory. You can access the live version here:
+**[https://voice-shield.vercel.app/](https://voice-shield.vercel.app/)**
 
 ### **How to use the Dashboard:**
 1.  Ensure your API server is running (`port 8001`).

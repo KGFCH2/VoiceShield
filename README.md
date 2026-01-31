@@ -1,11 +1,14 @@
 # VoiceShield AI - Voice Detection System
 
+[![Live Demo](https://img.shields.io/badge/Demo-Live_Website-sky?style=for-the-badge&logo=vercel)](https://voice-shield.vercel.app/)
+[![API Backend](https://img.shields.io/badge/Backend-Render-blue?style=for-the-badge&logo=render)](https://voiceshield-tz3i.onrender.com)
+
 A high-performance FastAPI-based system that uses heuristic audio signal processing to distinguish between human voices and AI-generated speech. Specifically optimized for Tamil, English, Hindi, Malayalam, and Telugu.
 
 ## 🌟 Key Features
 - **🎯 AI vs Human voice detection**: High-precision heuristic engine.
 - **🌍 Multi-lingual support**: Tamil, English, Hindi, Malayalam, Telugu.
-- **🎨 Modern Dashboard**: Interactive web interface for easy demos.
+- **🎨 Modern Dashboard**: Interactive web interface ([Live Demo](https://voice-shield.vercel.app/)).
 - **📊 Confidence Scoring**: Detailed explanations for every classification.
 - **📖 OpenAPI documentation**: Fully documented at `/docs`.
 
