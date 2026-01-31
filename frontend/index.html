@@ -5,9 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VoiceShield AI | AI Voice Detector</title>
-    
+
     <!-- Meta Tags for SEO & Social Sharing -->
-    <meta name="description" content="Advanced AI voice detection system. Check if any voice is human or AI-generated in seconds.">
+    <meta name="description"
+        content="Advanced AI voice detection system. Check if any voice is human or AI-generated in seconds.">
     <meta property="og:title" content="VoiceShield AI | AI Voice Detector">
     <meta property="og:description" content="Detect AI-generated speech with high-fidelity acoustic fingerprinting.">
     <meta property="og:image" content="https://voice-shield.vercel.app/og-image.png">
@@ -25,7 +26,8 @@
 
     <!-- Server Status Indicator -->
     <div class="fixed top-4 right-4 z-50">
-        <div id="server-status" class="glass-card px-3 py-1.5 flex items-center gap-2 text-[10px] font-bold tracking-widest uppercase opacity-60">
+        <div id="server-status"
+            class="glass-card px-3 py-1.5 flex items-center gap-2 text-[10px] font-bold tracking-widest uppercase opacity-60">
             <div id="status-dot" class="w-2 h-2 rounded-full bg-yellow-500 animate-pulse"></div>
             <span class="text-gray-300">API: <span id="status-text">CONNECTING</span></span>
         </div>
@@ -105,8 +107,8 @@
                             <i class="fas fa-shield-halved text-3xl text-sky-400 loader-icon"></i>
                         </div>
                         <h4 class="text-xl font-bold mb-2 tracking-tight">Protecting Analysis</h4>
-                        <p class="text-slate-400 text-sm animate-pulse">Running high-fidelity scan...</p>
-                        <p class="text-[10px] text-slate-500 mt-2">Analysis usually takes 35-40 seconds</p>
+                        <p class="text-slate-400 text-sm animate-pulse text-center">Running high-fidelity scan...</p>
+                        <p class="text-[10px] text-slate-500 mt-2 text-center">Initial analysis usually takes 45 seconds</p>
                         <div class="mt-8 flex gap-1">
                             <span class="loading-dot"></span>
                             <span class="loading-dot"></span>
@@ -168,7 +170,7 @@
         const DEMO_KEY = 'sk_test_123456789';
 
         // State Management
-        let selectedLanguage = 'English'; 
+        let selectedLanguage = 'English';
         let currentFileBase64 = null;
 
         const dom = {
@@ -213,7 +215,7 @@
 
         // Initialize status check
         checkServerStatus();
-        setInterval(checkServerStatus, 30000); 
+        setInterval(checkServerStatus, 30000);
 
         // File Handlers
         dom.dropZone.onclick = () => dom.fileInput.click();
@@ -263,6 +265,15 @@
             dom.dataState.classList.add('hidden');
             dom.loadingState.classList.add('hidden');
             dom.emptyState.classList.remove('hidden');
+
+            // Reset loading text
+            const loadingText = dom.loadingState.querySelector('p.text-slate-400');
+            const subText = dom.loadingState.querySelector('p.text-[10px]');
+            if (loadingText) loadingText.innerHTML = 'Running high-fidelity scan...';
+            if (subText) {
+                subText.textContent = 'Initial analysis usually takes 45 seconds';
+                subText.className = 'text-[10px] text-slate-500 mt-2 text-center';
+            }
         }
 
         // API Integration
@@ -275,8 +286,15 @@
             // Set a timeout for the "waking up" message
             const wakeupTimer = setTimeout(() => {
                 const loadingText = dom.loadingState.querySelector('p.text-slate-400');
+                const subText = dom.loadingState.querySelector('p.text-[10px]');
                 if (loadingText) {
-                    loadingText.innerHTML = 'Establishing connection with neural node...<br><span class="text-[10px] text-sky-400 font-bold">PLEASE WAIT: SERVER IS WAKING UP</span>';
+                    loadingText.innerHTML = 'Connecting to Secure API Node...<br><span class="text-sky-400 font-bold uppercase tracking-tighter">Please Wait: Server is Waking Up</span>';
+                    loadingText.classList.add('text-center');
+                }
+                if (subText) {
+                    subText.textContent = 'This may take around 2 minutes if the server was inactive.';
+                    subText.classList.remove('text-slate-500');
+                    subText.classList.add('text-yellow-500/80', 'font-medium');
                 }
             }, 5000);
 
