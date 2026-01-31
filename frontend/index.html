@@ -16,178 +16,129 @@
 
     <div class="max-w-5xl w-full mx-auto">
         <!-- Header -->
-        <header class="text-center mb-16 reveal-anim">
-            <div
-                class="inline-flex items-center justify-center bg-sky-500/10 border border-sky-500/20 rounded-full px-4 py-1.5 mb-6">
-                <span class="flex h-2 w-2 mr-2">
-                    <span class="animate-ping absolute inline-flex h-2 w-2 rounded-full bg-sky-400 opacity-75"></span>
-                    <span class="relative inline-flex rounded-full h-2 w-2 bg-sky-500"></span>
-                </span>
-                <span class="text-xs font-bold text-sky-400 uppercase tracking-widest">v1.2 Advanced Engine</span>
+        <header class="text-center mb-10 reveal-anim">
+            <div class="flex items-center justify-center mb-2">
+                <i class="fas fa-fingerprint text-4xl text-sky-400 mr-3 filter drop-shadow-[0_0_8px_rgba(56,189,248,0.5)]"></i>
+                <h1 class="text-4xl md:text-5xl font-bold tracking-tight">Voice<span class="gradient-text">Shield</span></h1>
             </div>
-            <div class="flex items-center justify-center mb-4">
-                <i
-                    class="fas fa-fingerprint text-5xl text-sky-400 mr-4 filter drop-shadow-[0_0_8px_rgba(56,189,248,0.5)]"></i>
-                <h1 class="text-5xl md:text-6xl font-bold tracking-tight">Voice<span class="gradient-text">Shield</span>
-                </h1>
-            </div>
-            <p class="text-slate-400 text-lg max-w-lg mx-auto leading-relaxed">High-fidelity acoustic fingerprinting to
-                verify the origin of human speech.</p>
+            <p class="text-slate-400 text-base max-w-lg mx-auto leading-relaxed">Check if a voice is real or made by AI.</p>
         </header>
 
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-            <!-- Left Side: Control Panel -->
-            <div class="lg:col-span-5 space-y-6 reveal-anim" style="animation-delay: 0.1s">
-                <div class="glass-card p-8">
-                    <h3 class="text-xl font-semibold mb-6 flex items-center">
-                        <i class="fas fa-sliders-h mr-3 text-sky-400"></i>
-                        Analysis Parameters
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+            <!-- Left Side: Settings Panel -->
+            <div class="lg:col-span-5 space-y-4 reveal-anim" style="animation-delay: 0.1s">
+                <div class="glass-card p-6">
+                    <h3 class="text-lg font-semibold mb-4 flex items-center">
+                        <i class="fas fa-cog mr-3 text-sky-400"></i>
+                        Settings
                     </h3>
 
                     <!-- Language Selection -->
-                    <div class="mb-8">
-                        <label class="block text-sm font-medium text-slate-400 mb-3 uppercase tracking-wider">Detection
-                            Language</label>
-                        <div class="grid grid-cols-2 gap-3" id="lang-grid">
-                            <button onclick="selectLang('english')"
-                                class="lang-btn px-4 py-3 rounded-xl border border-white/5 bg-white/5 hover:bg-white/10 transition-all text-sm font-medium active-lang"
-                                data-lang="english">
-                                <span class="block text-lg mb-1">🇺🇸</span> English
+                    <div class="mb-6">
+                        <label class="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wider">Choose Language</label>
+                        <div class="grid grid-cols-2 gap-2" id="lang-grid">
+                            <button onclick="selectLang('english')" class="lang-btn px-3 py-2 rounded-lg border border-white/5 bg-white/5 hover:bg-white/10 transition-all text-sm active-lang" data-lang="english">
+                                🇺🇸 English
                             </button>
-                            <button onclick="selectLang('hindi')"
-                                class="lang-btn px-4 py-3 rounded-xl border border-white/5 bg-white/5 hover:bg-white/10 transition-all text-sm font-medium"
-                                data-lang="hindi">
-                                <span class="block text-lg mb-1">🇮🇳</span> Hindi
+                            <button onclick="selectLang('hindi')" class="lang-btn px-3 py-2 rounded-lg border border-white/5 bg-white/5 hover:bg-white/10 transition-all text-sm" data-lang="hindi">
+                                🇮🇳 Hindi
                             </button>
-                            <button onclick="selectLang('tamil')"
-                                class="lang-btn px-4 py-3 rounded-xl border border-white/5 bg-white/5 hover:bg-white/10 transition-all text-sm font-medium"
-                                data-lang="tamil">
-                                <span class="block text-lg mb-1">🇮🇳</span> Tamil
+                            <button onclick="selectLang('tamil')" class="lang-btn px-3 py-2 rounded-lg border border-white/5 bg-white/5 hover:bg-white/10 transition-all text-sm" data-lang="tamil">
+                                🇮🇳 Tamil
                             </button>
-                            <button onclick="selectLang('malayalam')"
-                                class="lang-btn px-4 py-3 rounded-xl border border-white/5 bg-white/5 hover:bg-white/10 transition-all text-sm font-medium"
-                                data-lang="malayalam">
-                                <span class="block text-lg mb-1">🇮🇳</span> Malayalam
+                            <button onclick="selectLang('malayalam')" class="lang-btn px-3 py-2 rounded-lg border border-white/5 bg-white/5 hover:bg-white/10 transition-all text-sm" data-lang="malayalam">
+                                🇮🇳 Malayalam
                             </button>
-                            <button onclick="selectLang('telugu')"
-                                class="lang-btn px-4 py-3 rounded-xl border border-white/5 bg-white/5 hover:bg-white/10 transition-all text-sm font-medium"
-                                data-lang="telugu">
-                                <span class="block text-lg mb-1">🇮🇳</span> Telugu
+                            <button onclick="selectLang('telugu')" class="lang-btn px-3 py-2 rounded-lg border border-white/5 bg-white/5 hover:bg-white/10 transition-all text-sm" data-lang="telugu">
+                                🇮🇳 Telugu
                             </button>
                         </div>
                     </div>
 
                     <!-- File Upload -->
-                    <div id="drop-zone" class="upload-area rounded-2xl p-8 text-center cursor-pointer group">
+                    <div id="drop-zone" class="upload-area rounded-xl p-6 text-center cursor-pointer group">
                         <input type="file" id="audio-input" class="hidden" accept="audio/*">
-                        <div id="upload-prompt" class="mb-4">
-                            <div
-                                class="w-16 h-16 bg-sky-500/10 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
-                                <i class="fas fa-cloud-arrow-up text-2xl text-sky-400"></i>
-                            </div>
-                            <p class="text-sm font-semibold text-slate-200">Drop audio file here</p>
-                            <p class="text-xs text-slate-500 mt-1">MP3, WAV, M4A (Max 10MB)</p>
+                        <div id="upload-prompt">
+                            <i class="fas fa-upload text-xl text-sky-400 mb-2 block"></i>
+                            <p class="text-sm font-semibold text-slate-200">Click to upload audio</p>
+                            <p class="text-xs text-slate-500">MP3 or WAV works best</p>
                         </div>
                         <div id="file-info" class="hidden">
-                            <div class="bg-white/5 rounded-lg p-3 flex items-center text-left">
-                                <i class="far fa-file-audio text-sky-400 mr-3 text-xl"></i>
+                            <div class="bg-white/5 rounded-lg p-2 flex items-center text-left">
+                                <i class="far fa-file-audio text-sky-400 mr-2"></i>
                                 <div class="overflow-hidden">
-                                    <p id="file-name" class="text-sm font-medium truncate"></p>
-                                    <p id="file-size" class="text-xs text-slate-500"></p>
+                                    <p id="file-name" class="text-xs font-medium truncate"></p>
+                                    <p id="file-size" class="text-[10px] text-slate-500"></p>
                                 </div>
                             </div>
                         </div>
                     </div>
 
                     <button id="analyze-btn" disabled
-                        class="w-full mt-6 bg-sky-500 hover:bg-sky-400 disabled:opacity-50 disabled:cursor-not-allowed text-slate-900 font-bold py-4 rounded-xl transition-all btn-glow flex items-center justify-center space-x-3">
-                        <span>Initiate Scan</span>
-                        <i class="fas fa-bolt"></i>
+                        class="w-full mt-4 bg-sky-500 hover:bg-sky-400 disabled:opacity-50 disabled:cursor-not-allowed text-slate-900 font-bold py-3 rounded-lg transition-all btn-glow flex items-center justify-center space-x-2">
+                        <span>Check Voice</span>
+                        <i class="fas fa-play text-xs"></i>
                     </button>
-                </div>
-
-                <!-- Capabilities Card -->
-                <div class="glass-card p-6 bg-sky-500/5">
-                    <div class="flex items-center text-xs font-bold text-sky-400 uppercase tracking-widest mb-4">
-                        <i class="fas fa-microchip mr-2"></i> Engine Features
-                    </div>
-                    <ul class="text-sm space-y-3 text-slate-400">
-                        <li class="flex items-center"><i class="fas fa-check-circle text-sky-500/50 mr-2 text-xs"></i>
-                            Pitch Variance Analysis</li>
-                        <li class="flex items-center"><i class="fas fa-check-circle text-sky-500/50 mr-2 text-xs"></i>
-                            Spectral Flatness Check</li>
-                        <li class="flex items-center"><i class="fas fa-check-circle text-sky-500/50 mr-2 text-xs"></i>
-                            Multi-lingual Heuristics</li>
-                    </ul>
                 </div>
             </div>
 
             <!-- Right Side: Visualization & Results -->
             <div class="lg:col-span-7 reveal-anim" style="animation-delay: 0.2s">
-                <div id="result-container" class="glass-card min-h-[500px] flex flex-col overflow-hidden">
+                <div id="result-container" class="glass-card min-h-[400px] flex flex-col overflow-hidden">
                     <!-- Default State -->
-                    <div id="empty-state" class="flex-1 flex flex-col items-center justify-center p-12 text-center">
-                        <div class="wave-container mb-6">
+                    <div id="empty-state" class="flex-1 flex flex-col items-center justify-center p-8 text-center">
+                        <div class="wave-container mb-4">
                             <div class="wave-bar" style="animation-delay: 0.1s"></div>
                             <div class="wave-bar" style="animation-delay: 0.2s"></div>
                             <div class="wave-bar" style="animation-delay: 0.3s"></div>
                             <div class="wave-bar" style="animation-delay: 0.4s"></div>
-                            <div class="wave-bar" style="animation-delay: 0.5s"></div>
-                            <div class="wave-bar" style="animation-delay: 0.6s"></div>
                         </div>
-                        <h4 class="text-slate-500 font-medium mb-2">Awaiting Input Signal</h4>
-                        <p class="text-sm text-slate-600 max-w-xs leading-relaxed">Upload an audio sample to start the
-                            neural fingerprinting process.</p>
+                        <h4 class="text-slate-500 font-medium mb-1">Ready to Test</h4>
+                        <p class="text-xs text-slate-600 max-w-xs">Upload an audio file to see if it is human or AI.</p>
                     </div>
 
                     <!-- Loading State -->
                     <div id="loading-state"
-                        class="hidden flex-1 flex flex-col items-center justify-center p-12 scanning">
-                        <div class="spinner mb-6"></div>
-                        <h4 class="text-xl font-bold mb-2">Isolating Patterns</h4>
-                        <p class="text-slate-400 animate-pulse">Running acoustic feature extraction...</p>
+                        class="hidden flex-1 flex flex-col items-center justify-center p-8 scanning">
+                        <div class="spinner mb-4"></div>
+                        <h4 class="text-lg font-bold mb-1">Analyzing...</h4>
+                        <p class="text-slate-400 text-sm animate-pulse">Checking voice patterns</p>
                     </div>
 
                     <!-- Results State -->
-                    <div id="data-state" class="hidden flex-1 p-8">
-                        <div class="flex items-center justify-between mb-8 border-b border-white/5 pb-6">
-                            <div>
-                                <h3 class="text-2xl font-bold">Analysis Complete</h3>
-                                <p class="text-slate-400 text-sm">Processed using v1.2 engine</p>
-                            </div>
+                    <div id="data-state" class="hidden flex-1 p-6">
+                        <div class="flex items-center justify-between mb-6 border-b border-white/5 pb-4">
+                            <h3 class="text-xl font-bold">Result</h3>
                             <div id="result-badge"
-                                class="px-5 py-2 rounded-full font-bold text-sm tracking-widest uppercase"></div>
+                                class="px-4 py-1.5 rounded-full font-bold text-xs uppercase tracking-wider"></div>
                         </div>
 
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-                            <div class="bg-white/5 rounded-2xl p-5 border border-white/5">
-                                <p class="text-xs font-bold text-slate-500 uppercase mb-2">Confidence</p>
-                                <p id="res-score" class="text-3xl font-bold"></p>
+                        <div class="grid grid-cols-2 md:grid-cols-3 gap-3 mb-6">
+                            <div class="bg-white/5 rounded-xl p-4 border border-white/5">
+                                <p class="text-[10px] font-bold text-slate-500 uppercase mb-1">Certainty</p>
+                                <p id="res-score" class="text-2xl font-bold"></p>
                             </div>
-                            <div class="bg-white/5 rounded-2xl p-5 border border-white/5">
-                                <p class="text-xs font-bold text-slate-500 uppercase mb-2">Language</p>
-                                <p id="res-lang" class="text-2xl font-bold text-sky-400"></p>
+                            <div class="bg-white/5 rounded-xl p-4 border border-white/5">
+                                <p class="text-[10px] font-bold text-slate-500 uppercase mb-1">Language</p>
+                                <p id="res-lang" class="text-xl font-bold text-sky-400 truncate"></p>
                             </div>
-                            <div class="bg-white/5 rounded-2xl p-5 border border-white/5">
-                                <p class="text-xs font-bold text-slate-500 uppercase mb-2">Integrity</p>
-                                <p id="res-status" class="text-lg font-bold"></p>
+                            <div class="bg-white/5 rounded-xl p-4 border border-white/5 col-span-2 md:col-span-1">
+                                <p class="text-[10px] font-bold text-slate-500 uppercase mb-1">Type</p>
+                                <p id="res-status" class="text-base font-bold"></p>
                             </div>
                         </div>
 
-                        <div class="space-y-4">
-                            <h4 class="font-semibold text-slate-300 flex items-center">
-                                <i class="fas fa-list-check mr-2 text-sky-400"></i>
-                                Heuristic Insights
-                            </h4>
-                            <div id="res-insights" class="space-y-2">
+                        <div class="space-y-3">
+                            <h4 class="text-sm font-semibold text-slate-300">Why this result?</h4>
+                            <div id="res-insights" class="space-y-2 text-xs">
                                 <!-- Dynamic insights go here -->
                             </div>
                         </div>
 
-                        <div class="mt-auto pt-8">
+                        <div class="mt-8">
                             <button onclick="resetUI()"
-                                class="text-slate-500 hover:text-slate-300 transition-colors text-sm font-medium flex items-center">
-                                <i class="fas fa-redo-alt mr-2"></i> Clear and Analyze New Sample
+                                class="text-slate-500 hover:text-slate-300 transition-colors text-xs font-medium flex items-center">
+                                <i class="fas fa-undo mr-2"></i> Start Over
                             </button>
                         </div>
                     </div>
@@ -195,9 +146,9 @@
             </div>
         </div>
 
-        <footer class="mt-16 text-center reveal-anim" style="animation-delay: 0.4s">
-            <p class="text-slate-600 text-xs font-medium tracking-[0.2em] uppercase">
-                Enterprise Shield &bull; Local Secure Node 8001
+        <footer class="mt-12 text-center reveal-anim" style="animation-delay: 0.4s">
+            <p class="text-slate-600 text-[10px] font-bold tracking-widest uppercase">
+                Secure Voice Detection Node
             </p>
         </footer>
     </div>
