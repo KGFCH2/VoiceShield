@@ -4,7 +4,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VoiceShield AI - Voice Detection</title>
+    <title>VoiceShield AI | AI Voice Detector</title>
+    
+    <!-- Meta Tags for SEO & Social Sharing -->
+    <meta name="description" content="Advanced AI voice detection system. Check if any voice is human or AI-generated in seconds.">
+    <meta property="og:title" content="VoiceShield AI | AI Voice Detector">
+    <meta property="og:description" content="Detect AI-generated speech with high-fidelity acoustic fingerprinting.">
+    <meta property="og:image" content="https://voice-shield.vercel.app/og-image.png">
+    <meta property="og:url" content="https://voice-shield.vercel.app/">
+    <meta name="twitter:card" content="summary_large_image">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
@@ -13,6 +22,14 @@
 <body class="min-h-screen p-4 md:p-8 flex items-center justify-center">
     <!-- Animated background -->
     <div class="mesh-bg"></div>
+
+    <!-- Server Status Indicator -->
+    <div class="fixed top-4 right-4 z-50">
+        <div id="server-status" class="glass-card px-3 py-1.5 flex items-center gap-2 text-[10px] font-bold tracking-widest uppercase opacity-60">
+            <div id="status-dot" class="w-2 h-2 rounded-full bg-yellow-500 animate-pulse"></div>
+            <span class="text-gray-300">API: <span id="status-text">CONNECTING</span></span>
+        </div>
+    </div>
 
     <div class="max-w-5xl w-full mx-auto">
         <!-- Header -->
@@ -146,8 +163,12 @@
     </div>
 
     <script>
+        // API Configuration
+        const API_BASE = 'https://voiceshield-tz3i.onrender.com/api';
+        const DEMO_KEY = 'sk_test_123456789';
+
         // State Management
-        let selectedLanguage = 'English'; // Default to English for general detection
+        let selectedLanguage = 'English'; 
         let currentFileBase64 = null;
 
         const dom = {
@@ -166,8 +187,33 @@
             badge: document.getElementById('result-badge'),
             score: document.getElementById('res-score'),
             status: document.getElementById('res-status'),
-            insights: document.getElementById('res-insights')
+            insights: document.getElementById('res-insights'),
+
+            // Status Elements
+            statusDot: document.getElementById('status-dot'),
+            statusText: document.getElementById('status-text')
         };
+
+        // Server Health Check
+        async function checkServerStatus() {
+            try {
+                const start = Date.now();
+                const res = await fetch(`${API_BASE}/health`);
+                if (res.ok) {
+                    dom.statusDot.className = 'w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981]';
+                    dom.statusText.textContent = 'ONLINE';
+                    dom.statusText.className = 'text-emerald-400';
+                }
+            } catch (e) {
+                dom.statusDot.className = 'w-2 h-2 rounded-full bg-rose-500 shadow-[0_0_8px_#f43f5e]';
+                dom.statusText.textContent = 'OFFLINE';
+                dom.statusText.className = 'text-rose-400';
+            }
+        }
+
+        // Initialize status check
+        checkServerStatus();
+        setInterval(checkServerStatus, 30000); 
 
         // File Handlers
         dom.dropZone.onclick = () => dom.fileInput.click();
@@ -226,12 +272,20 @@
             dom.loadingState.classList.remove('hidden');
             dom.analyzeBtn.disabled = true;
 
+            // Set a timeout for the "waking up" message
+            const wakeupTimer = setTimeout(() => {
+                const loadingText = dom.loadingState.querySelector('p.text-slate-400');
+                if (loadingText) {
+                    loadingText.innerHTML = 'Establishing connection with neural node...<br><span class="text-[10px] text-sky-400 font-bold">PLEASE WAIT: SERVER IS WAKING UP</span>';
+                }
+            }, 5000);
+
             try {
-                const response = await fetch('https://voiceshield-tz3i.onrender.com/api/voice-detection', {
+                const response = await fetch(`${API_BASE}/voice-detection`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                        'x-api-key': 'sk_test_123456789'
+                        'x-api-key': DEMO_KEY
                     },
                     body: JSON.stringify({
                         language: selectedLanguage,
@@ -239,6 +293,8 @@
                         audioBase64: currentFileBase64
                     })
                 });
+
+                clearTimeout(wakeupTimer);
 
                 const data = await response.json();
 
