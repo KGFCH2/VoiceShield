@@ -51,11 +51,11 @@ pip install -r requirements.txt
 ```powershell
 # Run from the backend directory
 cd Voice/backend
-uvicorn app.main:app --reload --host 127.0.0.1 --port 8001
+uvicorn app.main:app --reload --host 127.0.0.1 --port 8000
 ```
 
 ### 4. Open the Interface
-Open **[frontend/index.html](frontend/index.html)** in your browser to start testing visually. Or visit **[http://127.0.0.1:8001/docs](http://127.0.0.1:8001/docs)** for the API documentation.
+Open **[frontend/index.html](frontend/index.html)** in your browser to start testing visually. Or visit **[http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)** for the API documentation.
 
 ---
 
@@ -92,8 +92,8 @@ The system uses **Digital Signal Processing (DSP)** via Librosa to analyze audio
 
 Once the server is running, access the documentation at:
 
-- **Swagger UI:** http://127.0.0.1:8001/docs
-- **ReDoc:** http://127.0.0.1:8001/redoc
+- **Swagger UI:** http://127.0.0.1:8000/docs
+- **ReDoc:** http://127.0.0.1:8000/redoc
 
 ## API Usage
 
