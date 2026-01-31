@@ -22,6 +22,9 @@ requests==2.31.0
 # Environment Variables
 python-dotenv==1.0.0
 
+# Build and Package Tools
+setuptools
+
 # Production Server
 gunicorn==21.2.0
 
