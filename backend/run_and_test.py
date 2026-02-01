@@ -15,7 +15,7 @@ def run_server():
         sys.executable, "-m", "uvicorn", 
         "app.main:app", 
         "--host", "127.0.0.1", 
-        "--port", "8001"
+        "--port", "8000"
     ])
 
 def test_api(audio_file: str, language: str):
@@ -28,7 +28,7 @@ def test_api(audio_file: str, language: str):
     max_retries = 10
     for i in range(max_retries):
         try:
-            r = requests.get("http://127.0.0.1:8001/api/health")
+            r = requests.get("http://127.0.0.1:8000/api/health")
             if r.status_code == 200:
                 print("Server is ready!")
                 break
@@ -49,7 +49,7 @@ def test_api(audio_file: str, language: str):
     
     # Make request
     response = requests.post(
-        "http://127.0.0.1:8001/api/voice-detection",
+        "http://127.0.0.1:8000/api/voice-detection",
         headers={
             "Content-Type": "application/json",
             "x-api-key": "sk_test_123456789"
@@ -78,7 +78,7 @@ if __name__ == "__main__":
     import argparse
     
     parser = argparse.ArgumentParser()
-    parser.add_argument("--audio", default="audio_test.mp3")
+    parser.add_argument("--audio", default="samples/audio_test.mp3")
     parser.add_argument("--language", required=True, help="Language of the audio (Tamil, English, Hindi, Malayalam, Telugu)")
     parser.add_argument("--server-only", action="store_true", help="Only run the server")
     args = parser.parse_args()
