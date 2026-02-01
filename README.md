@@ -5,6 +5,8 @@
 
 A high-performance FastAPI-based system that uses heuristic audio signal processing to distinguish between human voices and AI-generated speech. Specifically optimized for Tamil, English, Hindi, Malayalam, Telugu, and Bengali.
 
+**📚 Educational Purpose**: This project is developed solely for educational and learning purposes to demonstrate voice detection techniques, machine learning concepts, and API development. It is not intended for commercial use or production deployment.
+
 ## 🌟 Key Features
 - **🎯 AI vs Human voice detection**: High-precision heuristic engine.
 - **🌍 Multi-lingual support**: Tamil, English, Hindi, Malayalam, Telugu, Bengali.
@@ -26,14 +28,19 @@ To ensure the highest accuracy, please follow these guidelines:
 Voice/
 ├── backend/
 │   ├── app/                 # ⚙️ FastAPI application logic
+│   │   ├── models/          # 🧠 Voice detection models
+│   │   └── utils/           # 📉 Audio processing utilities
 │   ├── tests/               # 🧪 Unit and integration tests
 │   ├── samples/             # 🎙️ Audio sample files for testing
 │   ├── requirements.txt     # 📦 Backend dependencies
-│   ├── .env                 # 🔑 API Keys and Config
-│   └── run_and_test.py      # 🛠️ CLI diagnostic tool
+│   ├── run_and_test.py      # 🛠️ CLI diagnostic tool
+│   ├── debug_test.py        # 🔍 Raw feature score viewer
+│   └── test_client.py       # 🧪 API testing client
 ├── frontend/
-│   └── index.html           # 💻 Modern Web Dashboard
-└── README.md
+│   ├── index.html           # 💻 Modern Web Dashboard
+│   └── style.css            # 🎨 Dashboard styling
+├── INSTRUCTIONS.md          # 📖 Detailed setup and usage guide
+└── README.md                # 📋 Project overview
 ```
 
 ## 🚀 Quick Start Guide
@@ -89,7 +96,6 @@ The system uses **📉 Digital Signal Processing (DSP)** via Librosa to analyze 
 8. **⚡ Spectral Dynamics**: How frequency components change over time.
 
 ---
-© 2026 VoiceShield AI | Built with FastAPI & Librosa | Licensed under [MIT](LICENSE)
 
 ## 📖 API Documentation
 
@@ -250,7 +256,3 @@ The API can be deployed to any cloud platform that supports Python (e.g., Render
 - [ ] 🔒 Enable HTTPS
 - [ ] 🌐 Configure CORS for your domain
 - [ ] 🎬 Ensure FFmpeg is installed on the host
-
-## ⚖️ License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
