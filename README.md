@@ -3,11 +3,11 @@
 [![Live Demo](https://img.shields.io/badge/Demo-Live_Website-sky?style=for-the-badge&logo=vercel)](https://voice-shield.vercel.app/)
 [![API Backend](https://img.shields.io/badge/Backend-Render-blue?style=for-the-badge&logo=render)](https://voiceshield-tz3i.onrender.com)
 
-A high-performance FastAPI-based system that uses heuristic audio signal processing to distinguish between human voices and AI-generated speech. Specifically optimized for Tamil, English, Hindi, Malayalam, and Telugu.
+A high-performance FastAPI-based system that uses heuristic audio signal processing to distinguish between human voices and AI-generated speech. Specifically optimized for Tamil, English, Hindi, Malayalam, Telugu, and Bengali.
 
 ## 🌟 Key Features
 - **🎯 AI vs Human voice detection**: High-precision heuristic engine.
-- **🌍 Multi-lingual support**: Tamil, English, Hindi, Malayalam, Telugu.
+- **🌍 Multi-lingual support**: Tamil, English, Hindi, Malayalam, Telugu, Bengali.
 - **🎨 Modern Dashboard**: Interactive web interface ([Live Demo](https://voice-shield.vercel.app/)).
 - **📊 Confidence Scoring**: Detailed explanations for every classification.
 - **📖 OpenAPI documentation**: Fully documented at `/docs`.
@@ -18,7 +18,7 @@ To ensure the highest accuracy, please follow these guidelines:
 - **🎼 Format**: Currently supports **MP3** files only.
 - **📁 File Size**: Maximum limit of **10MB** per request.
 - **⏱️ Duration**: Minimum recommended length of **0.5 seconds**.
-- **🌐 Languages**: You must select one of the 5 supported languages (**Tamil, English, Hindi, Malayalam, or Telugu**) in the request.
+- **🌐 Languages**: You must select one of the 6 supported languages (**Tamil, English, Hindi, Malayalam, Telugu, or Bengali**) in the request.
 
 ## 📁 Project Structure
 
@@ -27,6 +27,7 @@ Voice/
 ├── backend/
 │   ├── app/                 # ⚙️ FastAPI application logic
 │   ├── tests/               # 🧪 Unit and integration tests
+│   ├── samples/             # 🎙️ Audio sample files for testing
 │   ├── requirements.txt     # 📦 Backend dependencies
 │   ├── .env                 # 🔑 API Keys and Config
 │   └── run_and_test.py      # 🛠️ CLI diagnostic tool
@@ -51,7 +52,7 @@ pip install -r requirements.txt
 ```powershell
 # Run from the backend directory
 cd Voice/backend
-uvicorn app.main:app --reload --host 127.0.0.1 --port 8000
+python -m uvicorn app.main:app --reload --host 127.0.0.1 --port 8000
 ```
 
 ### 4. 🔗 Open the Interface
@@ -66,10 +67,12 @@ Open **[frontend/index.html](frontend/index.html)** in your browser to start tes
 - `x-api-key`: `sk_test_123456789`
 - `Content-Type`: `application/json`
 
+**Supported Languages:** Tamil, English, Hindi, Malayalam, Telugu, Bengali
+
 **🧪 Sample CLI Test:**
 ```powershell
 cd backend
-python run_and_test.py --audio audio_test.mp3 --language Hindi
+python run_and_test.py --audio samples/audio_test.mp3 --language Hindi
 ```
 
 ---
@@ -122,7 +125,7 @@ POST /api/voice-detection
 
 | Field | Type | Description |
 |-------|------|-------------|
-| language | string | One of: Tamil, English, Hindi, Malayalam, Telugu |
+| language | string | One of: Tamil, English, Hindi, Malayalam, Telugu, Bengali |
 | audioFormat | string | Must be "mp3" |
 | audioBase64 | string | Base64-encoded MP3 audio |
 
@@ -158,7 +161,7 @@ POST /api/voice-detection
 ### 💻 cURL Example
 
 ```bash
-curl -X POST http://127.0.0.1:8001/api/voice-detection \
+curl -X POST http://127.0.0.1:8000/api/voice-detection \
   -H "Content-Type: application/json" \
   -H "x-api-key: sk_test_123456789" \
   -d '{
@@ -180,7 +183,7 @@ with open("sample.mp3", "rb") as f:
 
 # Make API request
 response = requests.post(
-    "http://127.0.0.1:8001/api/voice-detection",
+    "http://127.0.0.1:8000/api/voice-detection",
     headers={
         "Content-Type": "application/json",
         "x-api-key": "sk_test_123456789"
@@ -235,7 +238,7 @@ Environment variables in `backend/.env`:
 | Variable | Description | Default |
 |----------|-------------|---------|
 | API_KEYS | Comma-separated list of valid API keys | sk_test_123456789 |
-| PORT | Server port | 8001 |
+| PORT | Server port | 8000 |
 
 ## 🚀 Deployment
 
