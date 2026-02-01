@@ -1,6 +1,6 @@
 # 🎙️ AI Voice Detection API - Instructions & Documentation
 
-This project is a 🚀 REST API built with FastAPI that uses 🧠 heuristic-based audio signal processing to distinguish between human voices and AI-generated speech. It specifically supports **Tamil, English, Hindi, Malayalam, and Telugu**.
+This project is a 🚀 REST API built with FastAPI that uses 🧠 heuristic-based audio signal processing to distinguish between human voices and AI-generated speech. It specifically supports **Tamil, English, Hindi, Malayalam, Telugu, and Bengali**.
 
 ## 🚀 Setup and Execution
 
@@ -21,15 +21,19 @@ This project is a 🚀 REST API built with FastAPI that uses 🧠 heuristic-base
     Run from the `backend` directory.
     ```powershell
     cd backend
-    # Runs on port 8000 by default
-    uvicorn app.main:app --reload --host 127.0.0.1 --port 8000
+    # Runs on port 8000 by default (using python -m for reliability)
+    python -m uvicorn app.main:app --reload --host 127.0.0.1 --port 8000
     ```
 
 4.  **🧪 Testing**:
     Use the provided test script from the `backend` directory:
     ```powershell
     cd backend
-    python run_and_test.py --audio your_audio_file.mp3 --language Tamil
+    python run_and_test.py --audio samples/audio_test.mp3 --language Tamil
+    ```
+    To run automated unit tests:
+    ```powershell
+    python -m pytest tests/test_api.py -v
     ```
 
 ---
@@ -66,6 +70,7 @@ When testing via Swagger ([http://127.0.0.1:8000/docs](http://127.0.0.1:8000/doc
 ```
 
 ### **🔧 Common Troubleshooting**
+*   **⚠️ Command Not Found**: If commands like `uvicorn` or `pytest` result in "command not found," prefix them with `python -m` (e.g., `python -m uvicorn ...`). This is common on Windows when the Python Scripts folder isn't in your PATH.
 *   **🎬 FFmpeg Not Found**: If you see a `RuntimeWarning: Couldn't find ffmpeg`, ensure FFmpeg is installed and added to your system's PATH.
 *   **⚠️ 400 Bad Request**: Ensure your `audioBase64` string does not contain spaces or newlines.
 *   **🚫 401 Unauthorized**: Check that the `x-api-key` header is present and exactly matches the key in your `.env`.
@@ -91,7 +96,8 @@ When testing via Swagger ([http://127.0.0.1:8000/docs](http://127.0.0.1:8000/doc
 ### 4. 🛠️ Backend Utilities
 *   **📄 [backend/run_and_test.py](backend/run_and_test.py)**: Diagnostic CLI tool.
 *   **📄 [backend/debug_test.py](backend/debug_test.py)**: Raw feature score viewer.
-*   **📄 [backend/requirements.txt](backend/requirements.txt)**: Dependency list.
+*   **📁 [backend/samples/](backend/samples/)**: Directory containing audio samples for testing.
+*   **�📄 [backend/requirements.txt](backend/requirements.txt)**: Dependency list.
 *   **📄 [backend/.env](backend/.env)**: Environment configuration.
 
 
