@@ -1,7 +1,7 @@
 """
 Pydantic schemas for request/response validation
 """
-from pydantic import BaseModel, Field, field_validator
+from pydantic import BaseModel, Field, field_validator, ConfigDict
 from typing import Optional, Literal, Dict, Any
 from app.config import SUPPORTED_LANGUAGES
 
@@ -11,7 +11,7 @@ class VoiceDetectionRequest(BaseModel):
     
     language: str = Field(
         ...,
-        description="Language of the audio (Tamil, English, Hindi, Malayalam, Telugu)"
+        description="Language of the audio (Tamil, English, Hindi, Malayalam, Telugu, Bengali)"
     )
     audioFormat: str = Field(
         ...,
@@ -24,15 +24,15 @@ class VoiceDetectionRequest(BaseModel):
         examples=["SUQzBAAAAAECBVRTU0UAAAAOAAADTGF2ZjYwLjE2LjEwMEdFT0IAAQFjAAADYXBwbGljYXRpb24ve..."]
     )
     
-    model_config = {
-        "json_schema_extra": {
+    model_config = ConfigDict(
+        json_schema_extra={
             "example": {
                 "language": "Tamil",
                 "audioFormat": "mp3",
                 "audioBase64": "SUQzBAAAAAECBVRTU0UAAAAOAAADTGF2ZjYwLjE2LjEwMEdFT0IAAQFjAAADYXBwbGljYXRpb24veC1jMnBhLW1hbmlmZXN0LXN0b3JlAGMycGEAYzJwYSBtYW5pZmVzdCBzdG9yZQAAAECnanVtYgAAAB5qdW1kYzJwYQARABCAAACqADibcQNjMnBhAAAAQIFqdW1iAAAAR2p1bWRjMm1hABEAEIAAAKoAOJtxA3VybjpjMnBhOjkxNTY2OTZkLTVlNjktNDA3ZS1iY2FiLWYwNzYwZGY4OThiOAAAAAJ7anVtYgAAAClqdW1kYzJhcwARABCAAACqADibcQNjMnBhLmFzc2VydGlvbnMAAAAAy2p1bWIAAAApanVtZGNib3IAEQAQgAAAqgA4m3EDYzJwYS5hY3Rpb25zLnYyAAAAAJpjYm9yoWdhY3Rpb25zgaNmYWN0aW9ubGMycGEuY3JlYXRlZG1zb2Z0d2FyZUFnZW50akVs"
             }
         }
-    }
+    )
     
     @field_validator('language')
     @classmethod
@@ -99,8 +99,8 @@ class VoiceDetectionResponse(BaseModel):
         description="Short explanation for the classification decision"
     )
     
-    class Config:
-        json_schema_extra = {
+    model_config = ConfigDict(
+        json_schema_extra={
             "example": {
                 "status": "success",
                 "language": "Tamil",
@@ -109,6 +109,7 @@ class VoiceDetectionResponse(BaseModel):
                 "explanation": "Unnatural pitch consistency and robotic speech patterns detected"
             }
         }
+    )
 
 
 class ErrorResponse(BaseModel):
@@ -120,10 +121,11 @@ class ErrorResponse(BaseModel):
         description="Error message describing what went wrong"
     )
     
-    class Config:
-        json_schema_extra = {
+    model_config = ConfigDict(
+        json_schema_extra={
             "example": {
                 "status": "error",
                 "message": "Invalid API key or malformed request"
             }
         }
+    )
