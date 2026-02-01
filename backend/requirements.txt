@@ -19,8 +19,8 @@ soundfile==0.12.1
 pydub==0.25.1
 
 # HTTP Client (for testing)
-httpx==0.26.0
-requests==2.31.0
+httpx>=0.28.1
+requests>=2.31.0
 
 # Environment Variables
 python-dotenv==1.0.0
