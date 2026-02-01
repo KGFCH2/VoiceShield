@@ -31,14 +31,14 @@ class EnhancedVoiceDetector:
         
         # Adjusted weights for better AI detection
         self.feature_weights = {
-            'pitch_consistency': 0.18,
-            'spectral_flatness': 0.12,
-            'harmonic_structure': 0.15,
+            'pitch_consistency': 0.15,
+            'spectral_flatness': 0.10,
+            'harmonic_structure': 0.12,
             'mfcc_variance': 0.15,
-            'prosodic_naturalness': 0.12,
-            'spectral_dynamics': 0.08,
-            'micro_variations': 0.10,
-            'breath_patterns': 0.10  # New: breathing/pause patterns
+            'prosodic_naturalness': 0.18, # Increased: catch natural energy/rhythm
+            'spectral_dynamics': 0.06,
+            'micro_variations': 0.12, # Increased: detect human 'jitter'
+            'breath_patterns': 0.12  # Increased: natural pauses
         }
     
     def analyze_pitch_consistency(self, features: Dict[str, Any]) -> Tuple[float, str]:
@@ -61,14 +61,19 @@ class EnhancedVoiceDetector:
         # Modern AI voices often have pitch CV between 0.15-0.25 (mimicking natural)
         # But they lack the micro-fluctuations in pitch
         if pitch_cv < 0.08:
-            ai_score = 0.95
+            ai_score = 0.90
             explanations.append("very stable pitch")
         elif pitch_cv < 0.15:
-            ai_score = 0.80
+            ai_score = 0.75
             explanations.append("consistent pitch pattern")
         elif pitch_cv < 0.22:
-            ai_score = 0.60  # Suspicious range - typical of good TTS
-            explanations.append("controlled pitch variation")
+            # If energy variation is high, this CV range is more likely human
+            if features.get('rms_std', 0) / features.get('rms_mean', 1) > 0.6:
+                ai_score = 0.45
+                explanations.append("controlled but dynamic pitch")
+            else:
+                ai_score = 0.55
+                explanations.append("clean pitch pattern")
         elif pitch_cv < 0.30:
             ai_score = 0.40
             explanations.append("moderate pitch variation")
@@ -120,8 +125,13 @@ class EnhancedVoiceDetector:
         # AI voices often have very consistent spectral characteristics
         # Check for "too perfect" spectral consistency
         if flatness_std < 0.03:
-            ai_score += 0.30
-            explanations.append("very uniform spectrum")
+            # If the voice has high harmonic ratio and range, it might be singing
+            if features.get('harmonic_ratio', 0) > 0.7 and features.get('pitch_range', 0) > 80:
+                ai_score += 0.15 # Reduced boost for melodic voices
+                explanations.append("melodic spectral stability")
+            else:
+                ai_score += 0.25
+                explanations.append("very uniform spectrum")
         elif flatness_std < 0.08:
             # If pitch range is very high, this stability might be human singing
             if features.get('pitch_range', 0) > 250:
@@ -176,9 +186,9 @@ class EnhancedVoiceDetector:
                 ai_score = 0.85
                 explanations.append("very clean harmonics")
         elif harmonic_ratio > 0.75:
-            if pitch_range > 150:
-                ai_score = 0.50
-                explanations.append("balanced musicality")
+            if pitch_range > 80: # Lowered threshold for singing
+                ai_score = 0.45 
+                explanations.append("melodic harmonic structure")
             else:
                 ai_score = 0.65
                 explanations.append("clean harmonic structure")
@@ -228,8 +238,13 @@ class EnhancedVoiceDetector:
         
         # Delta (temporal) changes
         if delta_activity < 0.5:
-            ai_score += 0.20
-            explanations.append("limited temporal changes")
+            # Singing often has smooth transitions but high energy variation
+            if features.get('rms_std', 0) / features.get('rms_mean', 1) > 0.6:
+                ai_score += 0.05
+                explanations.append("controlled transitions")
+            else:
+                ai_score += 0.20
+                explanations.append("limited temporal changes")
         elif delta_activity < 1.0:
             ai_score += 0.10
             explanations.append("smooth transitions")
