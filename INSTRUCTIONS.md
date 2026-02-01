@@ -2,6 +2,8 @@
 
 This project is a 🚀 REST API built with FastAPI that uses 🧠 heuristic-based audio signal processing to distinguish between human voices and AI-generated speech. It specifically supports **Tamil, English, Hindi, Malayalam, Telugu, and Bengali**.
 
+**📚 Educational Purpose**: This project is developed solely for educational and learning purposes to demonstrate voice detection techniques, machine learning concepts, and API development. It is not intended for commercial use or production deployment.
+
 ## 🚀 Setup and Execution
 
 1.  **📦 Dependencies**:
@@ -96,9 +98,18 @@ When testing via Swagger ([http://127.0.0.1:8000/docs](http://127.0.0.1:8000/doc
 ### 4. 🛠️ Backend Utilities
 *   **📄 [backend/run_and_test.py](backend/run_and_test.py)**: Diagnostic CLI tool.
 *   **📄 [backend/debug_test.py](backend/debug_test.py)**: Raw feature score viewer.
+*   **📄 [backend/test_client.py](backend/test_client.py)**: API testing client.
 *   **📁 [backend/samples/](backend/samples/)**: Directory containing audio samples for testing.
-*   **�📄 [backend/requirements.txt](backend/requirements.txt)**: Dependency list.
-*   **📄 [backend/.env](backend/.env)**: Environment configuration.
+*   **📄 [backend/requirements.txt](backend/requirements.txt)**: Dependency list.
+*   **📄 [backend/.env](backend/.env)**: Environment configuration (not included in repo).
+
+### 5. 🖥️ Frontend
+*   **📄 [frontend/index.html](frontend/index.html)**: Modern web dashboard.
+*   **📄 [frontend/style.css](frontend/style.css)**: Dashboard styling.
+
+### 6. 📚 Documentation
+*   **📄 [README.md](README.md)**: Project overview and quick start.
+*   **📄 [INSTRUCTIONS.md](INSTRUCTIONS.md)**: Detailed setup and usage guide.
 
 
 ---
@@ -110,8 +121,3 @@ The API uses an **🧠 Enhanced Heuristic Model** rather than a simple black-box
 *   **👨‍💼 Human Indicators**: High pitch range, natural breathing pauses, and rich spectral dynamics.
 
 Each characteristic is weighted, and the final score (0.0 to 1.0) determines the classification.
-
----
-
-## ⚖️ License
-This software is shared under the **📄 MIT License**. You are free to use, modify, and distribute it.
