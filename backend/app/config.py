@@ -10,7 +10,7 @@ load_dotenv()
 API_KEYS = os.getenv("API_KEYS", "sk_test_123456789,sk_prod_987654321").split(",")
 
 # Supported Languages
-SUPPORTED_LANGUAGES = ["Tamil", "English", "Hindi", "Malayalam", "Telugu"]
+SUPPORTED_LANGUAGES = ["Tamil", "English", "Hindi", "Malayalam", "Telugu", "Bengali"]
 
 # Audio Configuration
 SUPPORTED_AUDIO_FORMATS = ["mp3"]
