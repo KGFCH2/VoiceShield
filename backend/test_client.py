@@ -76,7 +76,7 @@ def main():
     )
     parser.add_argument(
         "--language",
-        choices=["Tamil", "English", "Hindi", "Malayalam", "Telugu"],
+        choices=["Tamil", "English", "Hindi", "Malayalam", "Telugu", "Bengali"],
         default="English",
         help="Language of the audio (default: English)"
     )
