@@ -40,6 +40,7 @@ class TestLanguagesEndpoint:
         assert "Hindi" in data["languages"]
         assert "Malayalam" in data["languages"]
         assert "Telugu" in data["languages"]
+        assert "Bengali" in data["languages"]
 
 
 class TestAuthentication:
